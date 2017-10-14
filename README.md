@@ -14,19 +14,20 @@ sailsjs lift
 
 ## Chapter 4
 
-Shortcut blueprint routes and actions for video API
-|Verb	|Path				|Action	|Eg														|
---------------------------------------------------------------------------------------------
+**Shortcut blueprint routes and actions for video API**
+
+|Verb	|Path/routes		|Action	|Eg														|
+|-------|-------------------|-------|-------------------------------------------------------|
 |GET	|/video/find		|find	|http://localhost:1337/video							|
 |GET	|/video/find/:id 	|find	|http://localhost:1337/video/1							|
 |GET	|/video/create		|create	|http://localhost:1337/video/create?title=title&src=src |
 |GET	|/video/update/:id 	|update	|http://localhost:1337/video/update/3?title=new title 	|
 |GET	|/video/destroy/:id	|destroy|http://localhost:1337/video/destroy/4					|
 
-Restful blueprint routes and actions for video API
-|		|Route address 	|Target	|
-|Verb	|Path			|Action |
----------------------------------	
+**Restful blueprint routes and actions for video API**
+
+|Verb	|Path/Route		|Action |
+|-------|---------------|-------|	
 |GET	|/video/		|find 	|
 |GET	|/video/:id		|find 	|
 |POST	|/video			|create |
