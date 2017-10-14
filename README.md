@@ -33,3 +33,12 @@ sailsjs lift
 |POST	|/video			|create |
 |PUT	|/video/:id		|update |
 |DELETE	|/video/:id		|destroy|
+
+**Angular ajax requests vs Sails socket requests**
+
+|Angular AJAX requests	|Sails socket requests  |
+|-----------------------|-----------------------|
+|$http.get()			|io.socket.get()		|
+|$http.post()			|io.socket.post()		|
+|$http.put()			|io.socket.put()		|
+|$http.delete()			|io.socket.delete()		|

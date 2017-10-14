@@ -20,22 +20,26 @@ angular.module('brushfire_videosPage').controller('PageCtrl', [
     $scope.submitVideosError = false;
 
     // Get the existing videos.
-    $http.get('/video')
-      .then(function onSuccess(sailsResponse) {
-        $scope.videos = sailsResponse.data;
-      })
-      .catch(function onError(sailsResponse) {
+    io.socket.get('/video', function whenServerResponds(data, JWR){
+      $scope.videosLoading = false;
+      if(JWR.statusCode >= 400){
+        $scope.submitVideosError = true;
+        console.log('something bad happened');
+        return;
+      }
 
-        if (sailsResponse.data.status === '404') {
-          return;
-        }
+      $scope.videos = data;
+      $scope.$apply();
 
-        console.log("An unexpected error occurred: " + sailsResponse.data.statusText);
+      io.socket.on('video', function whenAVideoIsCreatedUpdatedOrDestroye(event){
+        $scope.videos.unshift({
+          title: event.data.title,
+          src: event.data.src,
+        });
 
-      })
-      .finally(function eitherWay() {
-        $scope.videosLoading = false;
+        $scope.$apply();
       });
+    });
 
     ///////////////////////////////////////////////////////////////
     // SET UP LISTENERS FOR DOM EVENTS
@@ -96,21 +100,22 @@ angular.module('brushfire_videosPage').controller('PageCtrl', [
       // (also disables form submission)
       $scope.busySubmittingVideo = true;
 
-      $http.post('/video', {
+      io.socket.post('/video', {
         title: _newVideo.title,
         src: _newVideo.src
-      })
-      .then(function onSuccess(sailsResponse) {
+      }, function whenServerResponds(data, JWR){
+        $scope.videosLoading = false;
+        if(JWR.statusCode >= 400){
+          console.log('something bad happened');
+          return;
+        }
         $scope.videos.unshift(_newVideo);
-      })
-      .catch(function onError(sailsResponse) {
-        console.log("An unexpected error occurred: " + sailsResponse.data.statusText);
-      })
-      .finally(function eitherWay() {
         $scope.busySubmittingVideo = false;
+
         $scope.newVideoTitle = '';
         $scope.newVideoSrc = '';
-      });
+        $scope.$apply();
+      })
     };
   }
 ]);
