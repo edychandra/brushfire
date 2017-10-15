@@ -6,55 +6,54 @@
  * This gives you an opportunity to set up your data model, run jobs, or perform some special logic.
  *
  * For more information on bootstrapping your app, check out:
- * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap.html
+ * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
 
 module.exports.bootstrap = function(cb) {
 
-  // It's very important to trigger this callback method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
+  // Return the number of records in the video model
+  Video.count().exec(function(err, numVideos) {
+    if (err) {
+      return cb(err);
+    }
 
-	Video.count().exec(function(err, numVideos){
-		if(err){
-			return cb(err);
-		}
+    // If there's at least one log the number to the console.
+    if (numVideos > 0) {
+      console.log('Existing video records: ', numVideos)
+      return cb();
+    }
 
-		if(numVideos > 0){
-			console.log('Number of video records: ', numVideos);
-			return cb();
-		}
+    // Add machinepack-youtube as a depedency
+    var Youtube = require('machinepack-youtube');
 
-		var Youtube = require('machinepack-youtube');
+    // List Youtube videos which match the specified search query.
+    Youtube.searchVideos({
+      query: 'grumpy cat',
+      apiKey: sails.config.google.apiKey,
+      limit: 15,
+    }).exec({
+      // An unexpected error occurred.
+      error: function(err) {
 
-		//List youtube videos which match the specified search query
-		Youtube.searchVideos({
-			query: 'grumpy cat',
-			apiKey: sails.config.google.apiKey,
-			limit: 15,
-		}).exec({
-			error: function(err){
-				console.log('an error: ', err);
-				return cb(err);
-			},
-			success: function(foundVideos){
-				_.each(foundVideos, function(video){
-					video.src = 'https://www.youtube.com/embed/' + video.id;
+      },
+      // OK.
+      success: function(foundVideos) {
+        _.each(foundVideos, function(video) {
+          video.src = 'https://www.youtube.com/embed/' + video.id;
+          delete video.description;
+          delete video.publishedAt;
+          delete video.id;
+          delete video.url;
+        });
 
-					delete video.description;
-					delete video.publishedAt;
-					delete video.id;
-					delete video.url;
-				});
-
-				Video.create(foundVideos).exec(function(err, videoRecordsCreated){
-					if(err){
-						return cb(err);
-					}
-
-					console.log(videoRecordsCreated);
-					return cb();
-				})
-			},
-		});
-	});
+        Video.create(foundVideos).exec(function(err, videoRecordsCreated) {
+          if (err) {
+            return cb(err);
+          }
+          console.log(foundVideos);
+          return cb();
+        });
+      },
+    });
+  });
 };
