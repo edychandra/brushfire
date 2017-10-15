@@ -1,8 +1,8 @@
 {
-  "name": "brushfire-ch4-start",
+  "name": "brushfire-chp6-start",
   "private": true,
   "version": "0.0.0",
-  "description": "Sails in Action - Start of Chapter 4 Source Files",
+  "description": "Sails in Action - Start of Chapter 6 Source Files",
   "keywords": [],
   "dependencies": {
     "ejs": "2.3.4",
@@ -21,18 +21,18 @@
     "include-all": "~0.1.6",
     "machinepack-youtube": "^2.2.0",
     "rc": "1.0.1",
-    "sails": "~0.12.3",
+    "sails": "~0.12.1",
     "sails-disk": "~0.10.9",
     "sails-generate-static": "^0.11.3"
   },
   "scripts": {
-    "start": "node app.js",
-    "debug": "node debug app.js"
+    "debug": "node debug app.js",
+    "start": "node app.js"
   },
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jgalt/start-of-chap-4.git"
+    "url": "git://github.com/jgalt/brushfire-chp6-start.git"
   },
   "author": "Mike McNeil/Irl Nathan",
   "license": "MIT"
