@@ -48,13 +48,13 @@ sailsjs lift
 ## Chapter 5 — Custom backend code
 
 * [**config/bootstrap.js**](http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap.html)
-An asynchronous function that runs before your Sails app gets lifted. This gives you an opportunity to set up your data model, run jobs, or perform some special logic.
+: an asynchronous function that runs before your Sails app gets lifted. This gives you an opportunity to set up your data model, run jobs, or perform some special logic.
 
 * [**Machinepacks**](http://node-machine.org/machinepacks)
-Machinepacks are sets of related utilities for performing common, repetitive development tasks with Node.js.
+: a sets of related utilities for performing common, repetitive development tasks with Node.js.
 
 * [**config/local.js**](http://sailsjs.org/#!/documentation/anatomy/myApp/config/local.js.html)
-A special file that allows you to set custom configuration without checking it in to version control, useful for plugging in sensitive credentials, like API keys.
+: a special file that allows you to set custom configuration without checking it in to version control, useful for plugging in sensitive credentials, like API keys.
 
 
 ## Chapter 6 — Using models
@@ -64,3 +64,27 @@ Sails looks for database connection in the following order (using User API):
 2. **setttings**	: config/models.js
 3. **connection**	: config/connections.js
 4. **adapter**		: .tmp/localDiskDb.db
+
+Install postgres adapter
+```bash
+npm install sails-postgresql --save
+```
+
+Sails console : interactive REPL (read, eval, print loop) tools that allows you to interact with models
+
+```javascript
+User.create({email:'sailsinaction@gmail.com', username:'sailsinaction', delete:false, banned:false, admin:false}).exec(function(err, foundRecords){
+	if(err) console.log(err);
+	console.log(foundRecords);
+});
+
+User.find().exec(function(err, foundRecords){
+	if(err) console.log(err);
+	console.log('The user records: ', foundRecords);
+});
+
+User.findOne({username: ['sailsinaction', 'nikolateslaidol']}).exec(function(err, foundRecords){
+	if (err) console.log(err);
+	console.log(foundRecords);
+});
+```

@@ -23,7 +23,8 @@
     "rc": "1.0.1",
     "sails": "~0.12.1",
     "sails-disk": "~0.10.9",
-    "sails-generate-static": "^0.11.3"
+    "sails-generate-static": "^0.11.3",
+    "sails-postgresql": "^0.11.4"
   },
   "scripts": {
     "debug": "node debug app.js",
