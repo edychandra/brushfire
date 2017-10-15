@@ -55,3 +55,12 @@ Machinepacks are sets of related utilities for performing common, repetitive dev
 
 * [**config/local.js**](http://sailsjs.org/#!/documentation/anatomy/myApp/config/local.js.html)
 A special file that allows you to set custom configuration without checking it in to version control, useful for plugging in sensitive credentials, like API keys.
+
+
+## Chapter 6 — Using models
+
+Sails looks for database connection in the following order (using User API):
+1. **user model**	: api/models/User.js
+2. **setttings**	: config/models.js
+3. **connection**	: config/connections.js
+4. **adapter**		: .tmp/localDiskDb.db
