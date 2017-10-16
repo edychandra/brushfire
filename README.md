@@ -114,3 +114,7 @@ User.destroy({deleted: true}).exec(function(err, deletedRecord){
 	console.log(deletedRecord);
 });
 ```
+
+## Chapter 7 — Custom actions
+
+test

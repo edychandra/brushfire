@@ -1,18 +1,10 @@
-angular.module('brushfire', ['ngRoute', 'toastr', 'compareTo'])
+angular.module('brushfire', ['ngRoute', 'toastr', 'compareTo', 'ngPatternRestrict'])
   .config(['$sceDelegateProvider', function($sceDelegateProvider) {
     $sceDelegateProvider.resourceUrlWhitelist([
       'self',
       '*://www.youtube.com/**'
     ]);
   }])
-
-.filter('spaceless', function() {
-  return function(input) {
-    if (input) {
-      return input.replace(/\s+/g, '-');
-    }
-  };
-})
 
 .config(['$routeProvider', function($routeProvider) {
 
@@ -27,8 +19,8 @@ angular.module('brushfire', ['ngRoute', 'toastr', 'compareTo'])
     controller: 'signupPageController'
   })
 
-    .when('/administration', {
-    templateUrl: '/templates/adminUsers.html',
+  .when('/administration', {
+    templateUrl: '/templates/admin-users.html',
     controller: 'adminUsersPageController'
   })
 
@@ -47,7 +39,7 @@ angular.module('brushfire', ['ngRoute', 'toastr', 'compareTo'])
     controller: 'editProfilePageController'
   })
 
-  .when('/restore', {
+  .when('/restore-profile', {
     templateUrl: '/templates/restore-profile.html',
     controller: 'restorePageController'
   });

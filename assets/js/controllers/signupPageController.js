@@ -10,13 +10,13 @@ angular.module('brushfire').controller('signupPageController', ['$scope', '$http
     // Set the loading state (i.e. show loading spinner)
     $scope.signupForm.loading = true;
 
-    // // Submit a POST request to Sails. [The signup action has been created.]
-    // $http.post('/user/signup', {
-
     // Submit a POST request to /user [This is using blueprints.]
-    $http.post('/user', {
+    // $http.post('/user', {
+
+    // // Submit a POST request to Sails. [The signup action has been created.]
+    $http.post('/user/signup', {
       email: $scope.signupForm.email,
-      username: $scope.signupForm.username.replace(/\s+/g, '-'),
+      username: $scope.signupForm.username,
       password: $scope.signupForm.password
     })
     .then(function onSuccess(sailsResponse){
@@ -28,6 +28,8 @@ angular.module('brushfire').controller('signupPageController', ['$scope', '$http
       window.location = '/user/' + sailsResponse.data.id;
     })
     .catch(function onError(sailsResponse){
+
+      console.log(sailsResponse.data.invalidAttributes);
 
     // Handle known error type(s).
     if (sailsResponse.status == 409) {
@@ -42,7 +44,7 @@ angular.module('brushfire').controller('signupPageController', ['$scope', '$http
     }
 
     // Handle unknown error type(s).
-    $scope.signupForm.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
+    $scope.signupForm.errorMsg = 'An unexpected error occurred: ' + (JSON.stringify(sailsResponse.data) || sailsResponse.status);
 
     })
     .finally(function eitherWay(){

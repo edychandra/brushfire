@@ -21,7 +21,7 @@
         ng-class="{'has-error':signup.email.$invalid &&
         signup.email.$dirty}">
         <label>Your email address</label>
-        <input type="email" class="form-control" placeholder="nikola@tesla.com" name="email" ng-model="signupForm.email" required >
+        <input type="email" class="form-control" placeholder="nikola@tesla.com" autofocus name="email" ng-model="signupForm.email" required >
         <span class="help-block has-error" ng-if="signup.email.$dirty">
           <span ng-show="signup.email.$error.required">Email address is required.</span>
           <span ng-show="signup.email.$error.email">Not a valid email address.</span>
@@ -33,9 +33,10 @@
         signup.username.$dirty}">
         <label>Your username</label>
         <input type="text" class="form-control" placeholder="nikola_tesla" name="username" ng-model="signupForm.username" required ng-minlength="6" ng-pattern-restrict="^[A-Za-z0-9]*$" pattern="^[A-Za-z0-9]*$">
-        <span style="color:red" ng-show="signup.username.$error.pattern">Only letters and numbers are allowed!</span>
+          <span style="color:red" ng-show="signup.username.$error.pattern">Only letters and numbers are allowed!</span>
         <span class="help-block has-error" ng-if="signup.username.$dirty">
           <span ng-show="signup.username.$error.required">Username is required.</span>
+          <span ng-show="signup.username.$error.minlength">Password must be at least 6 characters.</span>
         </span>
       </div>
       <!-- P A S S W O R D -->
@@ -67,6 +68,6 @@
     <span class="overlord-loading-spinner fa fa-spinner" ng-show="signupForm.loading" ></span>
     <span ng-show="signupForm.loading">Preparing your new account...</span>
     </button>
-    <span class="col-md-offset-3 col-md-6 text-center"> <a href='#/restore'>restore an account</a> </span>
+    <span class="col-md-offset-3 col-md-6 text-center"> <a href='#/restore-profile'>restore an account</a> </span>
   </form>
   <!-- <div ng-sparkline></div> -->

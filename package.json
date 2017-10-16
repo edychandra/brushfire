@@ -1,8 +1,8 @@
 {
-  "name": "brushfire-chp6-start",
+  "name": "brushfire-chp6-end",
   "private": true,
   "version": "0.0.0",
-  "description": "Sails in Action - Start of Chapter 6 Source Files",
+  "description": "Sails in Action - End of Chapter 6 Source Files",
   "keywords": [],
   "dependencies": {
     "ejs": "2.3.4",
@@ -24,7 +24,7 @@
     "sails": "~0.12.1",
     "sails-disk": "~0.10.9",
     "sails-generate-static": "^0.11.3",
-    "sails-postgresql": "^0.11.4"
+    "sails-postgresql": "^0.11.3"
   },
   "scripts": {
     "debug": "node debug app.js",

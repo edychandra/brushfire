@@ -7,47 +7,49 @@
 
 module.exports = {
 
-  connection:'myPostgresqlServer',
+  connection: 'myPostgresqlServer',
+
   migrate: 'drop',
 
   attributes: {
-  	email:{
-  		type: 'string',
-  		email: 'true',
-  		unique: 'true'
-  	},
 
-  	username: {
-  		type: 'string',
-  		unique: 'true'
-  	},
+    email: { 
+      type: 'string',
+      email: 'true', 
+      unique: 'true'
+    },
 
-  	encryptedPassowrd: {
-  		type: 'string',
-  	},
+    username: {
+      type: 'string',
+      unique: 'true'
+    },
 
-  	gravatarURL: {
-  		type: 'string',
-  	},
+    encryptedPassword: { 
+      type: 'string'
+    },
 
-  	deleted: {
-  		type: 'boolean',
-  	},
+    gravatarURL: { 
+      type: 'string'
+    },
 
-  	admin: {
-  		type: 'boolean',
-  	},
+    deleted: {
+      type: 'boolean'
+    },
 
-  	banned: {
-  		type: 'boolean',
-  	},
+    admin: {
+      type: 'boolean'
+    },
 
-  	toJSON: function(){
-  		var modelAttributes = this.toObject();
-  		delete modelAttributes.password;
-  		delete modelAttributes.confirmation;
-  		delete modelAttributes.encryptedPassowrd;
-  		return modelAttributes;
-  	}
+    banned: {
+      type: 'boolean'
+    },
+
+    toJSON: function() { 
+      var modelAttributes  = this.toObject();
+      delete modelAttributes.password;
+      delete modelAttributes.confirmation;
+      delete modelAttributes.encryptedPassword;
+      return modelAttributes;
+    }
   }
-};
+}
