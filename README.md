@@ -70,21 +70,47 @@ Install postgres adapter
 npm install sails-postgresql --save
 ```
 
-Sails console : interactive REPL (read, eval, print loop) tools that allows you to interact with models
+Sails console : interactive REPL (read, eval, print loop) tools that allows you to interact with models.
+Sails uses [Waterline ORM](http://sailsjs.com/documentation/concepts/models-and-orm/query-language) to interact with records from any supported database.
 
+```bash
+sails console
+```
+**Examples:**
 ```javascript
-User.create({email:'sailsinaction@gmail.com', username:'sailsinaction', delete:false, banned:false, admin:false}).exec(function(err, foundRecords){
+// create new record
+User.create({email:'sailsinaction@gmail.com', username:'sailsinaction', deleted:false, banned:false, admin:false}).exec(function(err, foundRecords){
 	if(err) console.log(err);
 	console.log(foundRecords);
 });
 
+// list all records
 User.find().exec(function(err, foundRecords){
 	if(err) console.log(err);
 	console.log('The user records: ', foundRecords);
 });
 
-User.findOne({username: ['sailsinaction', 'nikolateslaidol']}).exec(function(err, foundRecords){
+// find records matching parameter arrays
+User.find({username: ['sailsinaction', 'nikolateslaidol']}).exec(function(err, foundRecords){
 	if (err) console.log(err);
 	console.log(foundRecords);
+});
+
+// find single record matching param
+User.findOne({email: 'sailsinaction@gmail.com'}).exec(function(err, found) {
+	if (err) console.log(err);
+	console.log(found);
+});
+
+// update record matching param
+User.update({username: 'sailsinaction'}, {admin: true}).exec(function(err, updatedRecord){
+	if (err) console.log(err);
+	console.log(updatedRecord);
+});
+
+// delete record matching param
+User.destroy({deleted: true}).exec(function(err, deletedRecord){
+	if (err) console.log(err);
+	console.log(deletedRecord);
 });
 ```
