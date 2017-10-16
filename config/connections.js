@@ -85,7 +85,9 @@ module.exports.connections = {
   myPostgresqlServer: {
     adapter: 'sails-postgresql',   
     host: 'localhost',             
-    database: 'brushfire'
+    database: 'brushfire',
+    user: 'postgres',
+    password: 'root',
   }
 
 

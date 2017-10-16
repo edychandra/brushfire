@@ -117,4 +117,14 @@ User.destroy({deleted: true}).exec(function(err, deletedRecord){
 
 ## Chapter 7 — Custom actions
 
-test
+>[Lodash](https://lodash.com/) describes itself as a modern JavaScript utility library. The library is accessible via the global underscore (_) symbol. As its name suggests, it checks to see if a value is undefined.
+
+```bash
+npm install machinepack-emailaddresses --save
+npm install machinepack-passwords --save
+```
+
+**Using try/catch block**:
+The usage of **.execSync()** has two distinct differences in the synchronous usage of a machine:
+1. There’s no callback that passes an error and any result of the machine — you need to provide a variable that will be assigned the value of a successfully returned result.
+2. You're wrapping the machine in a try/catch. This will handle any errors without crashing the application. 
