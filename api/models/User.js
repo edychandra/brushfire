@@ -42,12 +42,12 @@ module.exports = {
   		type: 'boolean',
   	},
 
-  	// toJSON: function(){
-  	// 	var modelAttributes = this.toObject();
-  	// 	delete modelAttributes.password;
-  	// 	delete modelAttributes.confirmation;
-  	// 	delete modelAttributes.encryptedPassowrd;
-  	// 	return modelAttributes;
-  	// }
+  	toJSON: function(){
+  		var modelAttributes = this.toObject();
+  		delete modelAttributes.password;
+  		delete modelAttributes.confirmation;
+  		delete modelAttributes.encryptedPassowrd;
+  		return modelAttributes;
+  	}
   }
 };
