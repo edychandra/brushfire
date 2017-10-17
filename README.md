@@ -131,6 +131,7 @@ The usage of **.execSync()** has two distinct differences in the synchronous usa
 
 
 **[HTTP Responses](https://httpstatuses.com/)**
+
 | Code 	| Response 		 		|
 |-------|-----------------------|
 | 200	| OK					|
