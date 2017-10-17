@@ -34,7 +34,7 @@ angular.module('brushfire').controller('signupPageController', ['$scope', '$http
     // Handle known error type(s).
     if (sailsResponse.status == 409) {
       toastr.error(sailsResponse.data);
-      $scope.signupForm.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
+      // $scope.signupForm.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
       return;
     }
 

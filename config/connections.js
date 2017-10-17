@@ -87,7 +87,7 @@ module.exports.connections = {
     host: 'localhost',             
     database: 'brushfire',
     user: 'postgres',
-    password: 'root',
+    password: '1qaz@WSX',
   }
 
 

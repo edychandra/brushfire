@@ -65,7 +65,7 @@ Sails looks for database connection in the following order (using User API):
 3. **connection**	: config/connections.js
 4. **adapter**		: .tmp/localDiskDb.db
 
-Install postgres adapter
+**Install postgres adapter:**
 ```bash
 npm install sails-postgresql --save
 ```
@@ -128,3 +128,16 @@ npm install machinepack-passwords --save
 The usage of **.execSync()** has two distinct differences in the synchronous usage of a machine:
 1. There’s no callback that passes an error and any result of the machine — you need to provide a variable that will be assigned the value of a successfully returned result.
 2. You're wrapping the machine in a try/catch. This will handle any errors without crashing the application. 
+
+
+**[HTTP Responses](https://httpstatuses.com/)**
+| Code 	| Response 		 		|
+|-------|-----------------------|
+| 200	| OK					|
+| 400	| Request Invalid		|
+| 409	| Conflict				|
+| 403	| Forbidden				|
+| 404	| Not Found				|
+| 500	| Internal Server Error	|
+
+**Custom response**: api/responses/alreadyInUse.js

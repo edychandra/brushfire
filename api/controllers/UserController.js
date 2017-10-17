@@ -68,7 +68,25 @@ module.exports = {
 							gravatarURL: gravatarURL
 						};
 
-						return res.json(options);
+						// return res.json(options);
+						User.create(options).exec(function(err, createdUser){
+							if(err){
+								if(err.invalidAttributes && err.invalidAttributes.email && 
+									err.invalidAttributes.email[0] && err.invalidAttributes.email[0].rule === 
+									'unique'){
+									return res.alreadyInUse(err);
+								}
+
+								if(err.invalidAttributes && err.invalidAttributes.username && 
+									err.invalidAttributes.username[0] && err.invalidAttributes.username[0].rule === 
+									'unique'){
+									return res.alreadyInUse(err);
+								}
+
+								return res.negotiate(err);
+							}
+							return res.json(createdUser);
+						});
 					},
 				});
 			}
