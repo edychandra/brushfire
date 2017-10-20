@@ -115,6 +115,7 @@ User.destroy({deleted: true}).exec(function(err, deletedRecord){
 });
 ```
 
+
 ## Chapter 7 — Custom actions
 
 >[Lodash](https://lodash.com/) describes itself as a modern JavaScript utility library. The library is accessible via the global underscore (_) symbol. As its name suggests, it checks to see if a value is undefined.
