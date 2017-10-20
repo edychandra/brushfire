@@ -146,5 +146,35 @@ module.exports = {
 
 			return res.ok();
 		});
+	},
+
+	restoreProfile: function(req, res){
+		User.findOne({
+			email: req.param('email')
+		}), function foundUser(err, user){
+			if (err) return res.negotiate(err);
+			if(!user) return res.notFound();
+
+			Passwords.checkPassword({
+				passwordAttemp: req.param('password'),
+				encryptPassword: user.encryptPassword
+			}).exec({
+				error: function(err){
+					return res.negotiate(err);
+				},
+
+				incorrect: function(){
+					return res.notFound();
+				},
+
+				success: function(){
+					User.update({
+						id: user.id
+					}, {deleted: false}).exec(function(err, updatedUser){
+						return res.json(updatedUser);
+					});
+				}
+			});
+		}
 	}
 };
