@@ -108,6 +108,45 @@ module.exports = {
     });
   },
 
+  login: function(req, res){
+    User.findOne({
+      or: [
+      { email: req.param('email') },
+      { username: req.param('username') }
+      ]
+    }, function foundUser(err, createdUser){
+      if(err) return res.negotiate(err);
+      if(!createdUser) res.notFound();
+
+      Passwords.checkPassword({
+        passwordAttempt: req.param('password'),
+        encryptedPassword: createdUser.encryptedPassword
+      }).exec({
+        error: function(err){
+          return res.negotiate(err);
+        },
+
+        incorrect: function(err){
+          return res.notFound();
+        },
+
+        success: function(){
+          if(createdUser.deleted){
+            return res.forbidden("'Your account has been deleted. Please visit http://brushfire.io/restore to restore your account.'");
+          }
+
+          if(createdUser.banned){
+            return res.forbidden("'Your account has been banned, most likely for adding dog videos in violation of the Terms of Service. Please contact Chad or his mother.");
+          }
+
+          req.session.userId = user.id;
+
+          return res.ok();
+        }
+      });
+    });
+  },
+
   profile: function(req, res) {
 
     // Try to look up user using the provided email address

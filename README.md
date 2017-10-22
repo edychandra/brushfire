@@ -32,7 +32,6 @@ General web development, introduction to Sailsjs and static assets generator.
 |GET	|/video/destroy/:id	|destroy|http://localhost:1337/video/destroy/4					|
 
 
-<br />
 **RESTful blueprint routes and actions for video API**
 
 |Verb	|Path/Route		|Action |
@@ -43,7 +42,6 @@ General web development, introduction to Sailsjs and static assets generator.
 |PUT	|/video/:id		|update |
 |DELETE	|/video/:id		|destroy|
 
-<br />
 **Angular ajax requests vs Sails socket requests**
 
 |Angular ajax 	|Sails socket   	|
@@ -165,3 +163,5 @@ More detailed explanation on exec() vs execSync() : https://groups.google.com/fo
 
 
 ## Chapter 8 — Server-rendered views
+
+By default, Sailsjs uses [Embedded Javascript/EJS](http://www.embeddedjs.com/) template engine to combine the templates and data to produce HTML.
