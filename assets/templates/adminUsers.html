@@ -1,21 +1,25 @@
 <!-- USERS PAGE -->
 <div class="panel panel-default">
+
   <div class="panel-heading">
     <h3>User Administration</h3>
   </div>
+
   <!-- Error state -->
   <div ng-show="userList.errorMsg">
     <h5>Oops!</h5>
     <p>Looks like an error occurred.  Please try again later.</p>
     <code>
-    {{userList.errorMsg}}
+      {{userList.errorMsg}}
     </code>
   </div>
+
   <!-- Loading state -->
   <div ng-show="userList.loading">
     <span class="overlord-loading-spinner fa fa-spinner"></span>
     <span>Loading users...</span>
   </div>
+
   <!-- Empty state -->
   <div ng-show="userList.contents.length === 0">
     <!--
@@ -24,6 +28,7 @@
     -->
     <span>No users yet.</span>
   </div>
+
   <table class="table" ng-show="!userList.loading && userList.contents.length > 0">
     <tr>
       <th></th>
@@ -39,6 +44,7 @@
       <th></th>
     </tr>
     <tr ng-repeat="user in userList.contents">
+
       <td></td>
       <td> {{user.id}} </td>
       <td> {{user.gravatarURL}}</td>
@@ -47,5 +53,8 @@
       <td> <input type="checkbox" ng-model="user.admin" ng-click="saveAdmin(user.id, user.admin)"> </td>
       <td> <input type="checkbox" ng-model="user.banned" ng-click="saveBanned(user.id, user.banned)"> </td>
       <td> <input type="checkbox" ng-model="user.deleted" ng-click="saveDeleted(user.id, user.deleted)"> </td>
-    </table>
-  </div>
+      
+      
+
+  </table>
+</div>

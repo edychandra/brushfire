@@ -34,6 +34,7 @@ module.exports.bootstrap = function(cb) {
     }).exec({
       // An unexpected error occurred.
       error: function(err) {
+        console.log('the error', err);
 
       },
       // OK.

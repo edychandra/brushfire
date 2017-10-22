@@ -5,7 +5,7 @@ angular.module('brushfire').controller('adminUsersPageController', ['$scope', '$
     loading: false
   };
 
-  SCOPE=$scope;
+$scope.me = window.SAILS_LOCALS.me;
 
 
   $http.get('/user/adminUsers')
@@ -16,7 +16,6 @@ angular.module('brushfire').controller('adminUsersPageController', ['$scope', '$
 
   })
   .catch(function onError(sailsResponse){
-
     console.log(sailsResponse);
 
   })
@@ -47,11 +46,15 @@ angular.module('brushfire').controller('adminUsersPageController', ['$scope', '$
         console.log('sailsResponse: ', sailsResponse);
       })
       .catch(function onError(sailsResponse) {
+        // console.log(sailsResponse);
+        // Otherwise, display generic error if the error is unrecognized.
         $scope.editProfile.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
+
       })
       .finally(function eitherWay() {
         $scope.editProfile.loading = false;
       });
+
   };
 
   $scope.saveBanned = function(id, change){
@@ -71,19 +74,28 @@ angular.module('brushfire').controller('adminUsersPageController', ['$scope', '$
         // The .update() model method returns an array and not a single record.
         // window.location = '#/profile/' + sailsResponse.data[0].id;
 
+        // $scope.editProfile.loading = false;
+        // toastr.options.fadeOut = 1000;
+        // toastr.success('Successfully Saved!');
         toastr.success('user record saved!','', { timeOut: 1000 });
         console.log('sailsResponse: ', sailsResponse);
       })
       .catch(function onError(sailsResponse) {
+        // console.log(sailsResponse);
+        // Otherwise, display generic error if the error is unrecognized.
         $scope.editProfile.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
+
       })
       .finally(function eitherWay() {
         $scope.editProfile.loading = false;
       });
+
   };
 
   $scope.saveDeleted = function(id, change){
 
+    console.log('id: ', id);
+    console.log('change: ', change);
     var theRoute = '/user/updateDeleted/' + id;
 
     // Submit PUT request to Sails.
@@ -97,15 +109,20 @@ angular.module('brushfire').controller('adminUsersPageController', ['$scope', '$
         // The .update() model method returns an array and not a single record.
         // window.location = '#/profile/' + sailsResponse.data[0].id;
 
+        // $scope.editProfile.loading = false;
         toastr.success('user record saved!','', { timeOut: 1000 });
         console.log('sailsResponse: ', sailsResponse);
       })
       .catch(function onError(sailsResponse) {
+        // console.log(sailsResponse);
+        // Otherwise, display generic error if the error is unrecognized.
         $scope.editProfile.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
 
       })
       .finally(function eitherWay() {
         $scope.editProfile.loading = false;
       });
+
   };
+
 }]);

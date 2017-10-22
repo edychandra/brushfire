@@ -6,6 +6,9 @@ angular.module('brushfire').controller('restorePageController', ['$scope', '$htt
   };
 
   $scope.restoreProfile = function() {
+    // console.log('yep');
+    // console.log($scope.restoreForm.email);
+    // console.log($scope.restoreForm.password);
     
     $scope.restoreForm.loading = true;
 
@@ -16,10 +19,12 @@ angular.module('brushfire').controller('restorePageController', ['$scope', '$htt
     .then(function onSuccess(sailsResponse){
       console.log(sailsResponse);
 
-      window.location = '#/profile/' + sailsResponse.data[0].id;
+      window.location = '/profile';
     })
     .catch(function onError(sailsResponse) {
       console.log('sailsresponse: ', sailsResponse)
+      // Otherwise, display generic error if the error is unrecognized.
+      // $scope.restoreForm.errorMsg = 'Email/Password combination does not match profile';
       if (sailsResponse.data.status >= 400 < 404) {
         $scope.restoreForm.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
         toastr.error('The email/password combination did not match a user profile.','', { timeOut: 1000 });
@@ -30,5 +35,7 @@ angular.module('brushfire').controller('restorePageController', ['$scope', '$htt
     .finally(function eitherWay() {
       $scope.restoreForm.loading = false;
     });
+
   };
+
 }]);

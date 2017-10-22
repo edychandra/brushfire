@@ -2,20 +2,19 @@
  * User.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
+ * @docs        :: http://sailsjs.org/#!documentation/models
  */
 
 module.exports = {
 
   connection: 'myPostgresqlServer',
-
-  migrate: 'drop',
+  schema: 'true',
 
   attributes: {
 
-    email: { 
+    email: {
       type: 'string',
-      email: 'true', 
+      email: 'true',
       unique: 'true'
     },
 
@@ -24,11 +23,11 @@ module.exports = {
       unique: 'true'
     },
 
-    encryptedPassword: { 
+    encryptedPassword: {
       type: 'string'
     },
 
-    gravatarURL: { 
+    gravatarURL: {
       type: 'string'
     },
 
@@ -44,12 +43,12 @@ module.exports = {
       type: 'boolean'
     },
 
-    toJSON: function() { 
-      var modelAttributes  = this.toObject();
-      delete modelAttributes.password;
-      delete modelAttributes.confirmation;
-      delete modelAttributes.encryptedPassword;
-      return modelAttributes;
+    toJSON: function() {
+      var obj = this.toObject();
+      delete obj.password;
+      delete obj.confirmation;
+      delete obj.encryptedPassword;
+      return obj;
     }
   }
 }

@@ -140,7 +140,6 @@ The usage of **.execSync()** has two distinct differences in the synchronous usa
 1. There’s no callback that passes an error and any result of the machine — you need to provide a variable that will be assigned the value of a successfully returned result.
 2. You're wrapping the machine in a try/catch. This will handle any errors without crashing the application. 
 
-
 **Responses**
 
 | Code 	| Response 		 		|
@@ -163,3 +162,6 @@ Sailsjs custom responses can be added in **api/responses** folder eg: api/respon
 * execSync() : only relevant for machines with guaranteed immediate/synchronous behaviour
 
 More detailed explanation on exec() vs execSync() : https://groups.google.com/forum/#!topic/node-machine/-qhqq2kUyGM
+
+
+## Chapter 8 — Server-rendered views

@@ -13,42 +13,37 @@ angular.module('brushfire').controller('signupPageController', ['$scope', '$http
     // Submit a POST request to /user [This is using blueprints.]
     // $http.post('/user', {
 
-    // // Submit a POST request to Sails. [The signup action has been created.]
+    // Submit a POST request to Sails. [The signup action has been created.]
     $http.post('/user/signup', {
       email: $scope.signupForm.email,
-      username: $scope.signupForm.username,
+      username: $scope.signupForm.username.replace(/\s+/g, '-'),
       password: $scope.signupForm.password
     })
     .then(function onSuccess(sailsResponse){
 
       // Redirect to the profile page [This is after we have a profile page built]
-      window.location = '#/profile/' + sailsResponse.data.id;
+      // window.location = '#/profile/' + sailsResponse.data.id;
+      window.location = '/profile';
       
       // Redirect to the user blueprint record [This is before we have the profile page built]
-      window.location = '/user/' + sailsResponse.data.id;
+      // window.location = '/user/' + sailsResponse.data.id;
     })
     .catch(function onError(sailsResponse){
-
-      console.log(sailsResponse.data.invalidAttributes);
 
     // Handle known error type(s).
     if (sailsResponse.status == 409) {
       toastr.error(sailsResponse.data);
-      // $scope.signupForm.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
-      return;
-    }
-
-    if (sailsResponse.data.invalidAttributes) {
-      $scope.signupForm.errorMsg = 'An unexpected error occurred: ' + (JSON.stringify(sailsResponse.data.invalidAttributes));
+      $scope.signupForm.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
       return;
     }
 
     // Handle unknown error type(s).
-    $scope.signupForm.errorMsg = 'An unexpected error occurred: ' + (JSON.stringify(sailsResponse.data) || sailsResponse.status);
+    $scope.signupForm.errorMsg = 'An unexpected error occurred: ' + (sailsResponse.data || sailsResponse.status);
 
     })
     .finally(function eitherWay(){
       $scope.signupForm.loading = false;
     });
   };
+
 }]);
