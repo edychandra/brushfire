@@ -93,6 +93,73 @@ module.exports = {
 		})
 	},
 
+	changePassword: function(req, res){
+		if(_.isUndefined(req.param('password'))){
+			return res.badRequest('A password is required!');
+		}
+
+		if(req.param('password').length < 6){
+			return res.badRequest('Password must be at least 6 characters!');
+		}
+
+		Passwords.encryptPassword({
+			password: req.param('password'),
+		}).exec({
+			error: function(err){
+				return res.serverError(err);
+			},
+			success: function(result){
+				User.update({
+					id:req.param('id')
+				}, {
+					encryptPassword: result
+				}).exec(function(err, updatedUser){
+					if(err){
+						return res.negotiate(err);
+					}
+					return res.json(updatedUser);
+				});
+			}
+		});
+	},
+
+	adminUsers: function(req, res){
+		User.find().exec(function(err, users){
+			if(err) res.negotiate(err);
+			return res.json(users);
+		});
+	},
+
+	updateAdmin: function(req, res){
+		User.update(req.param('id'),{
+			admin: req.param('admin')
+		}).exec(function(err, update){
+			if(err) return res.negotiate(err);
+
+			return res.ok();
+		});
+	},
+
+	updateBanned: function(req, res){
+		User.update(req.param('id'),{
+			banned: req.param('banned')
+		}).exec(function(err, update){
+			if(err) return res.negotiate(err);
+
+			return res.ok();
+		});
+	},
+
+	updateDeleted: function(req, res){
+		User.update(req.param('id'),{
+			deleted: req.param('deleted')
+		}).exec(function(err, update){
+			if(err) return res.negotiate(err);
+
+			return res.ok();
+		});
+	},
+
 	profile: function(req, res){
 		User.findOne(req.param('id')).exec(function foundUser(err, user){
 			if(err) return res.negotiate(err);
@@ -176,5 +243,29 @@ module.exports = {
 				}
 			});
 		}
+	},
+
+	restoreGravatarURL: function(req, res){
+		try{
+			var restoredGravatarURL = gravatarURL = Gravatar.getImageUrl({
+				emailAddress: req.param('email')
+			}).execSync();
+
+			return res.json(restoredGravatarURL);
+		} catch(err){
+			return res.serverError(err);
+		}
+	},
+
+	updateProfile: function(req, res){
+		User.update({
+			id: req.param('id')
+		}, {
+			gravatarURL: req.param('gravatarURL')
+		}, function(err, updatedUser){
+			if(err) return res.negotiate(err);
+
+			return res.json(updatedUser);
+		});
 	}
 };
