@@ -93,7 +93,7 @@ module.exports.bootstrap = function(cb) {
           options.encryptedPassword = result;
           options.username = 'sailsinaction';
           options.deleted = false;
-          options.admin = false;
+          options.admin = true;
           options.banned = false;
           User.create(options).exec(function(err, createdUser) {
             if (err) {

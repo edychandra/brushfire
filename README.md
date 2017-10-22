@@ -165,3 +165,4 @@ More detailed explanation on exec() vs execSync() : https://groups.google.com/fo
 ## Chapter 8 — Server-rendered views
 
 By default, Sailsjs uses [Embedded Javascript/EJS](http://www.embeddedjs.com/) template engine to combine the templates and data to produce HTML.
+
