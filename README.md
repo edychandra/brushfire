@@ -166,3 +166,14 @@ More detailed explanation on exec() vs execSync() : https://groups.google.com/fo
 
 By default, Sailsjs uses [Embedded Javascript/EJS](http://www.embeddedjs.com/) template engine to combine the templates and data to produce HTML.
 
+```nodejs
+// return profile template with json data
+return res.view('profile', {
+	me: {
+		id: user.id,
+		email: user.email,
+		gravatarURL: user.gravatarURL,
+		admin: user.admin
+	}
+});
+```
