@@ -48,4 +48,31 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
+
+  VideoController: {
+    create: ['isLoggedIn']
+  },
+
+  UserController: {
+    login: ['isLoggedOut'],
+    logout: ['isLoggedIn'],
+    removeProfile: ['isLoggedIn'],
+    updateProfile: ['isLoggedIn'],
+    restoreGravatarURL: ['isLoggedIn'],
+    changePassword: ['isLoggedIn'],
+    signup: ['isLoggedOut'],
+    restoreProfile: ['isLoggedOut'],
+    adminUsers: ['isLoggedIn', 'isAdmin'],
+    updateAdmin: ['isLoggedIn', 'isAdmin'],
+    updateBanned: ['isLoggedIn', 'isAdmin'],
+    updateDeleted: ['isLoggedIn', 'isAdmin']
+  },
+
+  PageController: {
+    showSignupPage: ['isLoggedOut'],
+    showAdminPage: ['isLoggedIn', 'isAdmin'],
+    showProfilePage: ['isLoggedIn'],
+    showEditProfilePage: ['isLoggedIn'],
+    showRestorePage: ['isLoggedOut']
+  }
 };

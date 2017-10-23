@@ -191,3 +191,13 @@ req.session.userId = createdUser.id;
 > Middleware is code that can get in the middle of the request/response cycle. For example, the Sails router is middleware. Policies act like middleware and are executed before controller actions, making them ideal for managing access to endpoints.
 
 Add custom policies in : **api/policies** folder and enable them in **config/policies.js**
+
+Best practices for policies include not basing policies on parameters but instead relying on session properties and the results from database queries.
+
+**Logging**
+
+Default (log level)[http://sailsjs.com/documentation/concepts/logging] is info and it can be changed in **config/log.js**
+```javascript
+// to print log to console, depending on log level
+sails.log.info(req.session.userId);
+```

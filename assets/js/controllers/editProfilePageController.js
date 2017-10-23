@@ -63,7 +63,7 @@ angular.module('brushfire').controller('editProfilePageController', ['$location'
 
   $scope.updateProfile = function() {
 
-    var theRoute = 'user/updateProfile/' + $scope.me.id;
+    var theRoute = 'user/updateProfile';
 
     // Submit PUT request to Sails.
     $http.put(theRoute, {
@@ -118,7 +118,7 @@ angular.module('brushfire').controller('editProfilePageController', ['$location'
     // console.log('the change userprofile is: ', $scope.userProfile);
 
     $http.put('user/changePassword', {
-        id: $scope.me.id,
+        // id: $scope.me.id,
         password: $scope.editProfile.properties.password
       })
       .then(function onSuccess(sailsResponse) {

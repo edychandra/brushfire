@@ -150,9 +150,9 @@ module.exports = {
   },
 
   logout: function(req, res){
-    if(req.session.userId) return res.redirect('/');
+    if(!req.session.userId) return res.redirect('/');
 
-    User.findOne('req.session.userId', function foundUser(err, user){
+    User.findOne(req.session.userId, function foundUser(err, user){
       if(err) return res.negotiate(err);
 
       if(!user){
@@ -198,12 +198,8 @@ module.exports = {
   },
   removeProfile: function(req, res) {
 
-    if (!req.param('id')) { 
-      return res.badRequest('id is a required parameter.');
-    }
-
     User.update({ 
-      id: req.param('id')
+      id: req.session.userId
     }, {
       deleted: true 
     }, function(err, removedUser) {
@@ -274,7 +270,7 @@ module.exports = {
   updateProfile: function(req, res) {
 
     User.update({
-      id: req.param('id')
+      id: req.session.userId
     }, {
       gravatarURL: req.param('gravatarURL') 
     }, function(err, updatedUser) {
@@ -305,7 +301,7 @@ module.exports = {
       success: function(result) {
 
         User.update({ 
-          id: req.param('id')
+          id: req.session.userId
         }, {
           encryptedPassword: result
         }).exec(function(err, updatedUser) {
