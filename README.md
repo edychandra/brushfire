@@ -166,7 +166,7 @@ More detailed explanation on exec() vs execSync() : https://groups.google.com/fo
 
 By default, Sailsjs uses [Embedded Javascript/EJS](http://www.embeddedjs.com/) template engine to combine the templates and data to produce HTML.
 
-```nodejs
+```javascript
 // return profile template with json data
 return res.view('profile', {
 	me: {
@@ -177,3 +177,17 @@ return res.view('profile', {
 	}
 });
 ```
+
+## Chapter 9 — Authentication and sessions
+
+```javascript
+req.session.userId = createdUser.id;
+```
+
+## Chapter 10 — Policies and access control
+
+**Policy** : provide the ability to inject a reusable set of code before a request executes a controller action. Policies’ main benefits are that they can be written once and applied to any controller action. Policies can be used like middleware, meaning you can do almost anything you can imagine with them.
+
+> Middleware is code that can get in the middle of the request/response cycle. For example, the Sails router is middleware. Policies act like middleware and are executed before controller actions, making them ideal for managing access to endpoints.
+
+Add custom policies in : **api/policies** folder and enable them in **config/policies.js**
