@@ -196,7 +196,7 @@ Best practices for policies include not basing policies on parameters but instea
 
 **Logging**
 
-Default (log level)[http://sailsjs.com/documentation/concepts/logging] is info and it can be changed in **config/log.js**
+Default [log level](http://sailsjs.com/documentation/concepts/logging) is info and it can be changed in **config/log.js**
 ```javascript
 // to print log to console, depending on log level
 sails.log.info(req.session.userId);
