@@ -205,3 +205,25 @@ sails.log.info(req.session.userId);
 ## Chapter 11 — Refactoring
 
 > a process in which you take existing code and restructure it. This is done for a variety of reasons including organization, readability, and an overall reduction in the complexity.
+
+
+
+**WARNING**
+
+Database connection option should NOT be duplicated or declared in 2 different files like the following scenario or else Sails will crash with message: **error: A hook (orm) failed to load!**.
+
+```javascript
+// file : config/models.js
+module.exports.models = {
+  connection: 'myPostgresqlServer',
+  ...
+};
+
+// file : config/local.js
+module.exports.connections = {
+  myPostgresqlServer: {
+      adapter: 'sails-postgresql',  
+      ...
+  }
+}
+```
