@@ -73,11 +73,10 @@ module.exports.routes = {
 
   'GET /:username/followers': 'PageController.profileFollower',
   'GET /:username/following': 'PageController.profileFollowing',
-  'GET /:username': 'PageController.profile',
-  
-  // 'GET /:username': {
-  //   controller: 'PageController',
-  //   action: 'profile',
-  //   skipAssets: true
-  // }
+
+  'GET /:username': {
+    controller: 'PageController',
+    action: 'profile',
+    skipAssets: true
+  }
 };

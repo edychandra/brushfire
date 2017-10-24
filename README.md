@@ -208,7 +208,7 @@ sails.log.info(req.session.userId);
 
 
 
-**WARNING**
+**WARNING!**
 
 Database connection option should NOT be duplicated or declared in 2 different files like the following scenario or else Sails will crash with message: **error: A hook (orm) failed to load!**.
 
@@ -226,4 +226,25 @@ module.exports.connections = {
       ...
   }
 }
+```
+
+**Routing**
+
+Setting **skipAssets: true** prevents slug routing from affecting files under assets folder.
+
+```javascript
+'GET /:username': {
+	controller: 'PageController',
+	action: 'profile',
+	skipAssets: true
+}
+```
+
+Immediately invoked function expression (IIFE) : a function that's both declared and executed at the same time.
+
+Method **unique()** of machinepack-strings seemed to be deprecated, use [**random()**](http://node-machine.org/machinepack-strings/random) for now.
+
+```javascript
+var randomString = Strings.unique({}).execSync(); // deprecated
+var randomString = Strings.random({}).execSync(); // use this for now
 ```
