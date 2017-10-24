@@ -1,0 +1,45 @@
+<div ng-controller="tutorialsDetailNewPageController" ng-cloak>
+  <div class="container well">
+    <h1>Add a Tutorial    </h1>
+  </div>
+  <div class="row">
+    <!-- grey background with border -->
+    <div class="container well">
+      <%
+        // Using EJS tags so this doesn't show up in the page.
+        // The validation is tied to the form's `name` property.  Each input has it's
+        // own `ng-class` and `required` directives. The submit button's ng-disabled
+        // directive is tied to $invalid.
+      %>
+      <!-- Add NEW tutorial form -->
+      <form role="form" class='form-horizontal' name="newTutorial">
+        <!-- white background with border -->
+        <!-- T I T L E -->
+        <div class="form-group" ng-class="{'has-error':newTutorial.title.$invalid &&newTutorial.title.$dirty}">
+          <div class="list-group-item">
+            <label for="title" class=" control-label">Title</label>
+            <input type="text" class="form-control" name="title" autofocus placeholder="e.g. tutorial title" ng-model="tutorialDetailsNew.title" required>
+          </div>
+          <span class="help-block has-error" ng-if="newTutorial.title.$dirty">
+            <span ng-show="newTutorial.title.$error.required">Title is required.</span>
+          </span>
+        </div>
+        <!-- D E S C R I P T I O N -->
+        <div class="form-group" ng-class="{'has-error':newTutorial.description.$invalid &&newTutorial.description.$dirty}">
+
+          <div class="list-group-item">
+            <label for="description" class=" control-label">Description</label>
+            <textarea class="form-control" rows="3" name="description" placeholder="e.g. tutorial description" ng-model="tutorialDetailsNew.description" required></textarea>
+          </div>
+          <span class="help-block has-error" ng-if="newTutorial.description.$dirty">
+            <span ng-show="newTutorial.description.$error.required">Description is required.</span>
+          </span>
+        </div>
+        <span class="pull-right">
+          <a href="/<%=me.username%>" class="btn btn-default">cancel</a>
+          <button type="submit" ng-click="createTutorial()" ng-disabled="newTutorial.$invalid" class="btn btn-success">save</button>
+        </span>
+      </form>
+    </div>
+  </div>
+</div>

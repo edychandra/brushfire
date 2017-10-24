@@ -1,10 +1,11 @@
 {
-  "name": "brushfire-chp8-start",
+  "name": "brushfire-ch11-start",
   "private": true,
   "version": "0.0.0",
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "async": "^1.5.2",
     "ejs": "2.3.4",
     "grunt": "0.4.5",
     "grunt-contrib-clean": "0.6.0",
@@ -19,9 +20,12 @@
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.2.4",
     "include-all": "~0.1.6",
+    "machinepack-datetime": "^1.4.0",
     "machinepack-emailaddresses": "^0.4.0",
     "machinepack-gravatar": "^1.2.0",
+    "machinepack-mailgun": "^0.5.0",
     "machinepack-passwords": "^2.3.0",
+    "machinepack-strings": "^5.0.0",
     "machinepack-youtube": "^2.2.0",
     "rc": "1.0.1",
     "sails": "~0.12.1",
@@ -36,7 +40,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jgalt/brushfire-chp8-start.git"
+    "url": "git://github.com/irlnathan/brushfire-ch11-start.git"
   },
   "author": "Mike McNeil/Irl Nathan",
   "license": "MIT"

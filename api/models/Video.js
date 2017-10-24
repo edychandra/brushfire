@@ -9,6 +9,21 @@ module.exports = {
 
   attributes: {
 
+    title: {
+      type: 'string'
+    },
+
+    src: {
+      type: 'string'
+    },
+
+    lengthInSeconds: {
+      type: 'integer'
+    },
+
+    tutorialAssoc: {
+      model: 'tutorial'
+    }
   }
 };
 

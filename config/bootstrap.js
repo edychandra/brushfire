@@ -11,98 +11,87 @@
 
 module.exports.bootstrap = function(cb) {
 
-  // Return the number of records in the video model
-  Video.count().exec(function(err, numVideos) {
+  var async = require('async');
+  var Passwords = require('machinepack-passwords');
+  var Gravatar = require('machinepack-gravatar');
+
+  // This is to prevent us from pulling our hair out creating test users manually in the app
+  // `TEST_USERS` is an array of test users 
+  var TEST_USERS = [{
+    email: 'sailsinaction@gmail.com',
+    username: 'sailsinaction',
+    password: 'abc123',
+    admin: true
+  }, {
+    email: 'nikolateslaidol@gmail.com',
+    username: 'nikolatesla',
+    password: 'abc123',
+    admin: false
+  }];
+
+  // Iterate over testUsers array of dictionaries
+  async.each(TEST_USERS, function findOrCreateEachFakeUser(fakeUser, next){
+
+    // Check if this fake user already exists via the email property al
+    User.findOne({
+      email: fakeUser.email
+    }).exec(function (err, existingUser){
+
+      // This handles errors within the iteratee versus at the end in afterwards
+      // While I'm in findOrCreateEachFakeUser I can't call cb()
+      if (err) return next(err);
+
+      // if this user already exists...
+      if (existingUser) {
+        // then go to the next user
+        return next();
+      }
+
+      // Otherwise the user doesn't exist in the database.
+     
+      // Encrypt the password of the test user
+      Passwords.encryptPassword({
+        password: fakeUser.password,
+      }).exec({
+        error: function(err) {
+          return next(err);
+        },
+        success: function(encryptedPassword) {
+
+          // Get the gravatar url for the fakeUser
+          var gravatarURL;
+          try {
+            gravatarURL = Gravatar.getImageUrl({
+              emailAddress: fakeUser.email
+            }).execSync();
+
+          } catch (err) {
+            return next(err);
+          }
+
+          // Create a new user record with various stuff we just built
+          User.create({
+            gravatarURL: gravatarURL,
+            encryptedPassword: encryptedPassword,
+            email: fakeUser.email,
+            username: fakeUser.username,
+            deleted: false,
+            admin: fakeUser.admin,
+            banned: false,
+          }).exec(function(err, createdUser) {
+            if (err) {
+              return next(err);
+            }
+            return next();
+          }); //</User.create()>
+        }
+      }); //</Passwords.encryptPassword>
+    }); // </ User.find
+  }, function afterwards(err){
     if (err) {
       return cb(err);
     }
 
-    // If there's at least one log the number to the console.
-    if (numVideos > 0) {
-      // return cb();
-      return createTestUsers();   
-    }
-
-    // Add machinepack-youtube as a depedency
-    var Youtube = require('machinepack-youtube');
-
-    // List Youtube videos which match the specified search query.
-    Youtube.searchVideos({
-      query: 'grumpy cat',
-      apiKey: sails.config.google.apiKey,
-      limit: 15,
-    }).exec({
-      // An unexpected error occurred.
-      error: function(err) {
-        console.log('the error', err);
-
-      },
-      // OK.
-      success: function(foundVideos) {
-        _.each(foundVideos, function(video) {
-          video.src = 'https://www.youtube.com/embed/' + video.id;
-          delete video.description;
-          delete video.publishedAt;
-          delete video.id;
-          delete video.url;
-        });
-
-        Video.create(foundVideos).exec(function(err, videoRecordsCreated) {
-          if (err) {
-            return cb(err);
-          }
-          // return cb();
-          return createTestUsers();   
-        });
-      },
-    });
+    return cb();
   });
-
-  function createTestUsers() {
-
-    var Passwords = require('machinepack-passwords');
-    var Gravatar = require('machinepack-gravatar');
-
-    User.findOne({
-      email: 'sailsinaction@gmail.com'
-    }).exec(function(err, foundUser) {
-      if (foundUser){
-       return cb();
-      }
-
-      Passwords.encryptPassword({
-        password: 'abc123',
-      }).exec({
-        error: function(err) {
-          return cb(err);
-        },
-        success: function(result) {
-
-          var options = {};
-
-          try {
-            options.gravatarURL = Gravatar.getImageUrl({
-              emailAddress: 'sailsinaction@gmail.com'
-            }).execSync();
-
-          } catch (err) {
-            return cb(err);
-          }
-
-          options.email = 'sailsinaction@gmail.com';
-          options.encryptedPassword = result;
-          options.username = 'sailsinaction';
-          options.deleted = false;
-          options.admin = true;
-          options.banned = false;
-          User.create(options).exec(function(err, createdUser) {
-            if (err) {
-              return cb(err);
-            }
-            return cb();
-          });
-        }
-      });
-    });
-  }
 };

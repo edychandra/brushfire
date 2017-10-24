@@ -1,4 +1,4 @@
-<div ng-controller="signupPageController" ng-cloak>
+<div ng-controller="signupPageController" ng-cloak class="sign-up">
   <!-- Error state -->
   <div class="alert alert-info toggle" ng-show="signupForm.errorMsg">
     <h5>Oops!</h5>
@@ -12,63 +12,64 @@
     <span class="overlord-loading-spinner fa fa-spinner"></span>
     <span>Loading user data...</span>
   </div>
-  <div ng-hide="signupForm.loading">
-    <form ng-submit="submitSignupForm()" id="sign-up-form" class="form-signup" name="signup">
-      <h2 class="form-signin-heading">Create a user account</h2>
-      <div class="row">
-        <!-- E M A I L -->
-        <div class="control-group form-group col-md-12"
-          ng-class="{'has-error':signup.email.$invalid &&
-          signup.email.$dirty}">
-          <label>Your email address</label>
-          <input type="email" class="form-control" placeholder="nikola@tesla.com" name="email" ng-model="signupForm.email" required >
-          <span class="help-block has-error" ng-if="signup.email.$dirty">
-            <span ng-show="signup.email.$error.required">Email address is required.</span>
-            <span ng-show="signup.email.$error.email">Not a valid email address.</span>
-          </span>
-        </div>
-        <!-- U S E R  N A M E -->
-        <div class="control-group form-group col-md-12"
-          ng-class="{'has-error':signup.username.$invalid &&
-          signup.username.$dirty}">
-          <label>Your username</label>
-          <input type="text" class="form-control" placeholder="nikola_tesla" name="username" ng-model="signupForm.username" required ng-minlength="6" ng-pattern-restrict="^[A-Za-z0-9]*$" pattern="^[A-Za-z0-9]*$">
-          <span style="color:red" ng-show="signup.username.$error.pattern">Only letters and numbers are allowed!</span>
-          <span class="help-block has-error" ng-if="signup.username.$dirty">
-            <span ng-show="signup.username.$error.required">Username is required.</span>
-          </span>
-          <span ng-show="signup.username.$error.minlength">Password must be at least 6 characters.</span>
-        </div>
-        <!-- P A S S W O R D -->
-        <div class="control-group form-group col-md-6"
-          ng-class="{'has-error':signup.password.$invalid &&
-          signup.password.$dirty}">
-          <label>Password</label>
-          <!-- Added the compareTo directive that compares the passwords -->
-          <input type="password" class="form-control" placeholder="at least 6 characters" name="password" ng-model="signupForm.password" id="password" required ng-minlength="6" compare-to="signupForm.confirmPassword" >
-          <span class="help-block has-error" ng-if="signup.password.$dirty">
-            <span ng-show="signup.password.$error.required">Password is required.</span>
-            <span ng-show="signup.password.$error.minlength">Password must be at least 6 characters.</span>
-          </span>
-        </div>
-        <!-- C O N F I R M  P A S S W O R D -->
-        <div class="control-group form-group col-md-6">
-          <label>Re-enter password</label>
-          <input type="password" class="form-control" placeholder="one more time" name="confirmation" ng-model="signupForm.confirmPassword" required>
-          <span class="help-block has-error" ng-if="signup.confirmation.$dirty">
-            <span ng-show="signup.password.$error.compareTo">Password must match.</span>
-            <span ng-show="signup.confirmation.$error.required">Confirmation password is required.</span>
-          </span>
+  <!-- S T A R T  O F  T H E  P A N E L -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="auth-form sign-up-form col-sm-4 col-sm-offset-4">
+        <form role="form" ng-submit="submitSignupForm()" id="sign-up-form" name="signup">
+          <fieldset>
+            <div class="form-title">
+              <img src="/images/logo_transparent_orange_notext.png" alt="brushfire logo">
+              <span class="text">Sign Up</span>
+            </div>
+            <!-- E M A I L -->
+            <div class="form-group" ng-class="{'has-error':signup.email.$invalid &&signup.email.$dirty}">
+              <input ng-model="signupForm.email" autofocus class="form-control" placeholder="Enter your email" name="email" type="email" required>
+              <span class="help-block has-error" ng-if="signup.email.$dirty">
+                <span ng-show="signup.email.$error.required">Email address is required.</span>
+                <span ng-show="signup.email.$error.email">Not a valid email address.</span>
+              </span>
+            </div>
+            <!-- U S E R  N A M E -->
+            <div class="form-group" ng-class="{'has-error':signup.username.$invalid &&signup.username.$dirty}">
+              <input ng-model="signupForm.username" class="form-control" placeholder="Choose a username" name="username" type="username" required ng-minlength="6" ng-pattern-restrict="^[A-Za-z0-9]*$" pattern="^[A-Za-z0-9]*$">
+              <span class="help-block has-error" ng-if="signup.username.$dirty">
+                <span ng-show="signup.username.$error.required">Username is required.</span>
+                <span ng-show="signup.username.$error.minlength">Username must be at least 6 characters (Az0-9).</span>
+              </span>
+              <!-- <h1 class="text-center "> {{signupForm.username | spaceless }}</h1> -->
+            </div>
+            <!-- P A S S W O R D -->
+            <div class="form-group" ng-class="{'has-error':signup.password.$invalid &&signup.password.$dirty}">
+              <input ng-model="signupForm.password" class="form-control" placeholder="Password (At least 6 characters)" id="password" name="password" type="password" required ng-minlength="6" compare-to="signupForm.confirmPassword">
+              <span class="help-block has-error" ng-if="signup.password.$dirty">
+                <span ng-show="signup.password.$error.required">Password is required.</span>
+                <span ng-show="signup.password.$error.minlength">Password must be at least 6 characters.</span>
+              </span>
+            </div>
+            <!-- C O N F I R M  P A S S W O R D -->
+            <div class="form-group">
+              <input ng-model="signupForm.confirmPassword" class="form-control" placeholder="Confirm password" id="password" name="confirmation" type="password" required>
+              <span class="help-block has-error" ng-if="signup.confirmation.$dirty">
+                <span ng-show="signup.password.$error.compareTo">Password must match.</span>
+                <span ng-show="signup.confirmation.$error.required">Confirmation password is required.</span>
+              </span>
+            </div>
+            <!-- Disable signup button until the form has no errors -->
+            <div class="form-group">
+              <button class="submit-btn btn btn-lg btn-block" type="submit" ng-disabled="signup.$invalid">
+                <span ng-show="!signupForm.loading">Create Account</span>
+                <span class="bf-loading-spinner fa fa-spinner" ng-show="signupForm.loading" ></span>
+                <span ng-show="signupForm.loading">Preparing your new account...</span>
+              </button>
+            </div>
+          </fieldset>
+        </form>
+        <div class="auth-form-links">
+          <p>Already have an account? <a class="sign-in-link" href="/signin"> Sign in here.</a></p>
+          <p><a class="restore-link" href="/profile/restore">Restore an old account.</a></p>
         </div>
       </div>
-      <br/>
-      <!-- Disable signup button until the form has no errors -->
-      <button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="signup.$invalid">
-      <span ng-show="!signupForm.loading">Create User Account</span>
-      <span class="overlord-loading-spinner fa fa-spinner" ng-show="signupForm.loading" ></span>
-      <span ng-show="signupForm.loading">Preparing your new account...</span>
-      </button>
-      <span class="col-md-offset-3 col-md-6 text-center"> <a href='/restore-profile'>restore an account</a> </span>
-    </form>
+    </div>
   </div>
 </div>

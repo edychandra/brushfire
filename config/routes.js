@@ -1,34 +1,83 @@
-module.exports.routes = {
-  /*************************************************************
-   * JSON API                                                  *
-   *************************************************************/
-  'PUT /login': 'UserController.login',
-  'GET /logout': 'UserController.logout',
+/**
+ * Brushfire explicit routes
+ *
+ */
 
-  'GET /video': 'VideoController.find',
-  'POST /video': 'VideoController.create',
+module.exports.routes = {
+
+  /*************************************************************
+  * JSON API ENDPOINTS                                         *
+  *************************************************************/
+
+  'PUT /login': 'UserController.login',
+  'POST /logout': 'UserController.logout',
+  'GET /logout': 'PageController.logout',
 
   'POST /user/signup': 'UserController.signup',
-  'PUT /user/removeProfile': 'UserController.removeProfile',
-  'PUT /user/restoreProfile': 'UserController.restoreProfile',
-  'PUT /user/restoreGravatarURL': 'UserController.restoreGravatarURL',
-  'PUT /user/updateProfile/:id': 'UserController.updateProfile',
-  'PUT /user/changePassword': 'UserController.changePassword',
-  'GET /user/adminUsers': 'UserController.adminUsers',
-  'PUT /user/updateAdmin/:id': 'UserController.updateAdmin',
-  'PUT /user/updateBanned/:id': 'UserController.updateBanned',
-  'PUT /user/updateDeleted/:id': 'UserController.updateDeleted',
+  'PUT /user/remove-profile': 'UserController.removeProfile',
+  'PUT /user/restore-profile': 'UserController.restoreProfile',
+  'PUT /user/restore-gravatar-URL': 'UserController.restoreGravatarURL',
+  'PUT /user/update-profile': 'UserController.updateProfile',
+  'PUT /user/change-password': 'UserController.changePassword',
+  'GET /user/admin-users': 'UserController.adminUsers',
+  'PUT /user/update-admin/:id': 'UserController.updateAdmin',
+  'PUT /user/update-banned/:id': 'UserController.updateBanned',
+  'PUT /user/update-deleted/:id': 'UserController.updateDeleted',
+  'PUT /user/generate-recovery-email': 'UserController.generateRecoveryEmail',
+  'PUT /user/reset-password': 'UserController.resetPassword',
+  'PUT /user/follow': 'UserController.follow',
+  'PUT /user/unfollow': 'UserController.unFollow',
 
+  'GET /tutorials': 'TutorialController.browseTutorials',
+  'POST /tutorials': 'TutorialController.createTutorial',
+  'POST /tutorials/:tutorialId/videos': 'TutorialController.addVideo',
+  'PUT /tutorials/:id': 'TutorialController.updateTutorial',
+  'PUT /tutorials/:id/rate': 'TutorialController.rateTutorial',
+
+  'POST /videos/:id/chat': 'VideoController.chat',
+  'PUT /videos/:id/join': 'VideoController.joinChat',
+
+  'DELETE /tutorials/:id': 'TutorialController.deleteTutorial',
+  'DELETE /videos/:id': 'TutorialController.removeVideo',
+
+  'POST /videos/:id/up': 'VideoController.reorderVideoUp',
+  'POST /videos/:id/down': 'VideoController.reorderVideoDown',
+  'PUT /videos/:id': 'TutorialController.updateVideo',
 
   /*************************************************************
-   * Server-rendered HTML Pages                                *
-   *************************************************************/
+  * Server Rendered HTML Page Endpoints                        *
+  *************************************************************/
+  
+  'GET /profile/followers': 'PageController.profileFollower',
 
-  'GET /': 'PageController.showHomePage',
-  'GET /videos': 'PageController.showVideosPage',
-  'GET /profile': 'PageController.showProfilePage',
-  'GET /edit-profile': 'PageController.showEditProfilePage',
-  'GET /signup': 'PageController.showSignupPage',
-  'GET /restore-profile': 'PageController.showRestorePage',
-  'GET /administration': 'PageController.showAdminPage',
+
+  'GET /': 'PageController.home',
+  'GET /profile/edit': 'PageController.editProfile',
+  'GET /profile/restore': 'PageController.restoreProfile',
+  'GET /signin': 'PageController.signin',
+  'GET /signup': 'PageController.signup',
+  'GET /administration': 'PageController.administration',
+
+  'GET /password-recovery-email': 'PageController.passwordRecoveryEmail',
+  'GET /password-recovery-email-sent': 'PageController.passwordRecoveryEmailSent',  
+  'GET /password-reset-form/:passwordRecoveryToken': 'PageController.passwordReset',
+  
+  'GET /tutorials/search': 'TutorialController.searchTutorials',
+  'GET /tutorials/browse': 'PageController.showBrowsePage',
+  'GET /tutorials/new': 'PageController.newTutorial',
+  'GET /tutorials/:id': 'PageController.tutorialDetail',
+  'GET /tutorials/:id/edit': 'PageController.editTutorial',
+  'GET /tutorials/:id/videos/new': 'PageController.newVideo',
+  'GET /tutorials/:tutorialId/videos/:id/edit': 'PageController.editVideo',
+  'GET /tutorials/:tutorialId/videos/:id/show': 'PageController.showVideo',
+
+  'GET /:username/followers': 'PageController.profileFollower',
+  'GET /:username/following': 'PageController.profileFollowing',
+  'GET /:username': 'PageController.profile',
+  
+  // 'GET /:username': {
+  //   controller: 'PageController',
+  //   action: 'profile',
+  //   skipAssets: true
+  // }
 };

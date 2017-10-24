@@ -7,9 +7,6 @@
 
 module.exports = {
 
-  connection: 'myPostgresqlServer',
-  schema: 'true',
-
   attributes: {
 
     email: {
@@ -43,6 +40,36 @@ module.exports = {
       type: 'boolean'
     },
 
+    passwordRecoveryToken: {
+      type: 'string'
+    },
+
+    tutorials: {
+      type: 'json'
+    },
+
+    // tutorials: {
+    //   collection: 'tutorial',
+    // },
+     
+
+    ratings: {
+      collection: 'rating',
+      via: 'byUser' 
+    },
+
+    // Who is following me?
+    followers: {
+      collection: 'user',
+      via: 'following'
+    },
+
+    // Who am I following?
+    following: {
+      collection: 'user',
+      via: 'followers'
+    },
+
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;
@@ -51,4 +78,4 @@ module.exports = {
       return obj;
     }
   }
-}
+};

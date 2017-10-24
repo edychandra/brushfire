@@ -1,5 +1,16 @@
 angular.module('brushfire').controller('adminUsersPageController', ['$scope', '$http', 'toastr', function($scope, $http, toastr){
 
+/*
+   ____          _____                _           
+  / __ \        |  __ \              | |          
+ | |  | |_ __   | |__) |___ _ __   __| | ___ _ __ 
+ | |  | | '_ \  |  _  // _ \ '_ \ / _` |/ _ \ '__|
+ | |__| | | | | | | \ \  __/ | | | (_| |  __/ |   
+  \____/|_| |_| |_|  \_\___|_| |_|\__,_|\___|_|   
+                                                  
+                                                  
+*/
+
   // set-up loading state
   $scope.userList = {
     loading: false
@@ -8,15 +19,14 @@ angular.module('brushfire').controller('adminUsersPageController', ['$scope', '$
 $scope.me = window.SAILS_LOCALS.me;
 
 
-  $http.get('/user/adminUsers')
+  $http.get('/user/admin-users')
   .then(function onSuccess(sailsResponse){
 
-    console.log('sailsResponse: ', sailsResponse);
     $scope.userList.contents = sailsResponse.data;
 
   })
   .catch(function onError(sailsResponse){
-    console.log(sailsResponse);
+    console.error(sailsResponse);
 
   })
   .finally(function eitherWay(){
@@ -24,11 +34,21 @@ $scope.me = window.SAILS_LOCALS.me;
     $scope.userList.loading = false;
   });
 
+/* 
+  _____   ____  __  __   ______               _       
+ |  __ \ / __ \|  \/  | |  ____|             | |      
+ | |  | | |  | | \  / | | |____   _____ _ __ | |_ ___ 
+ | |  | | |  | | |\/| | |  __\ \ / / _ \ '_ \| __/ __|
+ | |__| | |__| | |  | | | |___\ V /  __/ | | | |_\__ \
+ |_____/ \____/|_|  |_| |______\_/ \___|_| |_|\__|___/
+
+*/
+
   $scope.saveAdmin = function(id, change){
 
-    console.log('id: ', id);
-    console.log('change: ', change);
-    var theRoute = '/user/updateAdmin/' + id;
+    var theRoute = '/user/update-admin/' + id;
+
+    $scope.userList.loading = true;
 
     // Submit PUT request to Sails.
     $http.put(theRoute, {
@@ -37,13 +57,7 @@ $scope.me = window.SAILS_LOCALS.me;
       })
       .then(function onSuccess(sailsResponse) {
 
-        // Notice that the sailsResponse is an array and not a single object
-        // The .update() model method returns an array and not a single record.
-        // window.location = '#/profile/' + sailsResponse.data[0].id;
-
-        // $scope.editProfile.loading = false;
         toastr.success('user record saved!','', { timeOut: 1000 });
-        console.log('sailsResponse: ', sailsResponse);
       })
       .catch(function onError(sailsResponse) {
         // console.log(sailsResponse);
@@ -52,16 +66,16 @@ $scope.me = window.SAILS_LOCALS.me;
 
       })
       .finally(function eitherWay() {
-        $scope.editProfile.loading = false;
+        $scope.userList.loading = false;
       });
 
   };
 
   $scope.saveBanned = function(id, change){
 
-    console.log('id: ', id);
-    console.log('change: ', change);
-    var theRoute = '/user/updateBanned/' + id;
+    $scope.userList.loading = true;
+
+    var theRoute = '/user/update-banned/' + id;
 
     // Submit PUT request to Sails.
     $http.put(theRoute, {
@@ -70,15 +84,10 @@ $scope.me = window.SAILS_LOCALS.me;
       })
       .then(function onSuccess(sailsResponse) {
 
-        // Notice that the sailsResponse is an array and not a single object
-        // The .update() model method returns an array and not a single record.
-        // window.location = '#/profile/' + sailsResponse.data[0].id;
-
         // $scope.editProfile.loading = false;
         // toastr.options.fadeOut = 1000;
         // toastr.success('Successfully Saved!');
         toastr.success('user record saved!','', { timeOut: 1000 });
-        console.log('sailsResponse: ', sailsResponse);
       })
       .catch(function onError(sailsResponse) {
         // console.log(sailsResponse);
@@ -87,16 +96,16 @@ $scope.me = window.SAILS_LOCALS.me;
 
       })
       .finally(function eitherWay() {
-        $scope.editProfile.loading = false;
+        $scope.userList.loading = false;
       });
 
   };
 
   $scope.saveDeleted = function(id, change){
 
-    console.log('id: ', id);
-    console.log('change: ', change);
-    var theRoute = '/user/updateDeleted/' + id;
+    var theRoute = '/user/update-deleted/' + id;
+
+    $scope.userList.loading = true;
 
     // Submit PUT request to Sails.
     $http.put(theRoute, {
@@ -105,13 +114,8 @@ $scope.me = window.SAILS_LOCALS.me;
       })
       .then(function onSuccess(sailsResponse) {
 
-        // Notice that the sailsResponse is an array and not a single object
-        // The .update() model method returns an array and not a single record.
-        // window.location = '#/profile/' + sailsResponse.data[0].id;
-
         // $scope.editProfile.loading = false;
         toastr.success('user record saved!','', { timeOut: 1000 });
-        console.log('sailsResponse: ', sailsResponse);
       })
       .catch(function onError(sailsResponse) {
         // console.log(sailsResponse);
@@ -120,7 +124,7 @@ $scope.me = window.SAILS_LOCALS.me;
 
       })
       .finally(function eitherWay() {
-        $scope.editProfile.loading = false;
+        $scope.userList.loading = false;
       });
 
   };

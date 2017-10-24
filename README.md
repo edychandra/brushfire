@@ -201,3 +201,7 @@ Default [log level](http://sailsjs.com/documentation/concepts/logging) is info a
 // to print log to console, depending on log level
 sails.log.info(req.session.userId);
 ```
+
+## Chapter 11 — Refactoring
+
+> a process in which you take existing code and restructure it. This is done for a variety of reasons including organization, readability, and an overall reduction in the complexity.

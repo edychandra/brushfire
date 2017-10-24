@@ -1,8 +1,95 @@
-<div ng-controller="homePageController" class=" col-md-8 col-md-offset-2">
-  <div class="jumbotron">
-    <h1 class="jumboHeading">Chad's Feline Viral Videos Emporium</h1>
-    <h2 class="jumboSubHeading">Viral cat videos since 2015</h2>
-    <div><img src="./images/cat_logo.png" /></div>
-    <a ng-hide="me.id || false" href="/signup" class="btn btn-lg btn-success">Sign up now!</a>
+<div ng-controller="homePageController" class="homepage" ng-cloak>
+  <div class="banner" ng-class="{'short': results}">
+    <div class="container">
+      <div class="row">
+        <div class="col col-md-8 col-md-offset-2">
+          <div class="search-header">
+            <!-- <img class="logo" src="./images/logo_transparent.png"/> -->
+            <h1>What do you want to learn?</h1>
+            <!-- <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h3> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-md-6 col-md-offset-3">
+          <form class="form"  ng-submit="searchTutorials()">
+            <div class="search-input-group input-group input-group-lg">
+              <input type="text" class="search-input form-control" placeholder="Search" name="search" ng-model="searchCriteria" autofocus>
+              <div class="input-group-btn">
+                <button class="submit-btn btn btn-default" type="submit" ng-disabled="loading">
+                <span ng-show="!loading"><i class="fa fa-search" ></i></span>
+                <span ng-show="loading"><i class="overlord-loading-spinner fa fa-spinner" ></i></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="results">
+    <div class="container" ng-cloak ng-hide="results">
+      <div class="row">
+        <div class="col-md-12">
+          <div>
+            <h1 class="search-header text-primary">Welcome!</h1>
+          </div>
+          <div class="well">
+            <h5>Are you ready to learn something new and exciting? Type a query in the search box to begin.</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" ng-cloak ng-show="results">
+      <div class="row">
+        <div class="col-md-12">
+          <div>
+            <h1 class="search-header text-primary">Search Results:</h1>
+          </div>
+
+          <div class="well">
+            <ul class="list-group" ng-hide="noResults">
+              <li class="tutorial list-group-item" ng-repeat="tutorial in tutorials">
+                <a href="/tutorials/{{tutorial.id}}" class="list-group-item tutorials-list">
+                  <h3 class="tutorial-title list-group-item-heading">
+                  {{ tutorial.title }}
+                  </h3>
+                  <p class="tutorial-description list-group-item-text">
+                    {{ tutorial.description }}
+                  </p>
+                  <ul class="tutorial-info list-inline list-unstyled">
+                    <li>
+                      <span><i class="icon fa fa-user"></i> By {{ tutorial.owner }}</span>
+                    </li>
+                    <li class="divider">|</li>
+                    <li>
+                      <span>Created {{ tutorial.created }}</span>
+                    </li>
+                    <li class="divider">|</li>
+                    <li>
+                      <span><i class="icon fa fa-video-camera"></i>  {{ tutorial.totalTime }}</span>
+                    </li>
+                    <li class="divider">|</li>
+                    <li>
+                      <span>
+                        <span class="rating-label">Average Rating:</span>
+                        <span class="rating-stars">
+                          <rating ng-model="tutorial.averageRating" max="max" readonly="isReadonly" on-hover="hoveringOver(value, tutorial.id)" on-leave="overStar = null"></rating>
+                        </span>
+                      </span>
+                    </li>
+                  </ul>
+                </a>
+              </li><!-- </list-group-item> -->
+            </ul><!-- </list-group> -->
+            <p ng-show="noResults">Sorry! We couldn't find any tutorials that matched your query. Perhaps try something else?</p>
+            <button class="btn btn-primary center-block" ng-click="fetchMoreTutorialsLikeThis()" ng-disabled="loading || noMoreTutorials" ng-hide="noResults">
+            <span ng-show="!loading">showing more tutorials</span>
+            <span ng-show="loading"><i class="overlord-loading-spinner fa fa-spinner" ></i></span>
+            </button>
+          </div> <!-- </well> -->
+        </div>
+      </div>
+    </div>
   </div>
 </div>

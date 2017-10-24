@@ -1,48 +1,88 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>New Sails App</title>
+    <title>Brushfire</title>
+
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
+
+    <!-- Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,300italic,700,700italic' rel='stylesheet' type='text/css'>
+
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/angular-toastr.css">
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/dependencies/angular-toastr.css">
+    <link rel="stylesheet" href="/styles/dependencies/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/dependencies/fontawesome.min.css">
+    <link rel="stylesheet" href="/styles/dependencies/ng-cloak.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
-    <script type="text/javascript">
-        window.SAILS_LOCALS = {
-            me: <%- JSON.stringify(me||null) %>
-        };
+
+    <!-- Expose sails locals on the window object -->
+    <script type="text/javascript"> //#A
+    window.SAILS_LOCALS = {
+      _csrf: <%- typeof _csrf !== 'undefined' ? JSON.stringify(_csrf) : 'null' %>,
+
+      me: <%-
+      // Note that by putting these comments inside of the EJS tag, we prevent them from
+      // being sent down to client (i.e. they are boiled away on the server along with the
+      // EJS tags)
+      //
+      // Notice we must check that `me` exists using typeof to keep EJS from throwing
+      // and displaying an ugly error message when rendering certain pages
+      // (i.e. 404 /500 error pages)
+      typeof me !== 'undefined' ? JSON.stringify(me) : 'null'
+      // Note that we deliberately use 'null' (a string) because EJS converts the `null` literal
+      // into empty string (''), which is not what we want (that would be invalid JS and cause a
+      // client-side error in the browser)
+      %>
+    };
     </script>
+
   </head>
   <body ng-app="brushfire">
     <%- partial('./partials/navigation.ejs') %>
     <%- body %>
+
     <!--TEMPLATES-->
     <script type="text/javascript" src="/jst.js"></script>
     <!--TEMPLATES END-->
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
     <script src="/js/dependencies/angular.js"></script>
-    <script src="/js/dependencies/angular-route.min.js"></script>
-    <script src="/js/dependencies/angular-toastr.js"></script>
-    <script src="/js/dependencies/angular-toastr.tpls.js"></script>
-    <script src="/js/dependencies/compareTo.module.js"></script>
-    <script src="/js/dependencies/jquery-1.11.2.min.js"></script>
     <script src="/js/dependencies/jquery.min.js"></script>
     <script src="/js/dependencies/lodash.js"></script>
+    <script src="/js/dependencies/angular-toastr.js"></script>
+    <script src="/js/dependencies/bootstrap.js"></script>
+    <script src="/js/dependencies/compareTo.module.js"></script>
+    <script src="/js/dependencies/ui-bootstrap.js"></script>
+    <script src="/js/dependencies/ui-bootstrap-tpls.js"></script>
+    <script src="/js/dependencies/angular-toastr.tpls.js"></script>
     <script src="/js/dependencies/ng-pattern-restrict.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/controllers/adminUsersPageController.js"></script>
+    <script src="/js/controllers/browseTutorialsPageController.js"></script>
     <script src="/js/controllers/editProfilePageController.js"></script>
     <script src="/js/controllers/homePageController.js"></script>
     <script src="/js/controllers/navPageController.js"></script>
+    <script src="/js/controllers/passwordRecoveryPageController.js"></script>
+    <script src="/js/controllers/profileFollowersPageController.js"></script>
+    <script src="/js/controllers/profileFollowingPageController.js"></script>
     <script src="/js/controllers/profilePageController.js"></script>
+    <script src="/js/controllers/resetPasswordPageController.js"></script>
     <script src="/js/controllers/restorePageController.js"></script>
+    <script src="/js/controllers/restoreProfilePageController.js"></script>
+    <script src="/js/controllers/showVideoPageController.js"></script>
+    <script src="/js/controllers/signinPageController.js"></script>
+    <script src="/js/controllers/signoutPageController.js"></script>
     <script src="/js/controllers/signupPageController.js"></script>
+    <script src="/js/controllers/tutorialsDetailEditPageController.js"></script>
+    <script src="/js/controllers/tutorialsDetailNewPageController.js"></script>
+    <script src="/js/controllers/tutorialsDetailPageController.js"></script>
+    <script src="/js/controllers/tutorialsDetailVideoEditPageController.js"></script>
+    <script src="/js/controllers/tutorialsDetailVideoNewPageController.js"></script>
     <script src="/js/controllers/videosPageController.js"></script>
-    <script src="/js/videos-page.js"></script>
     <!--SCRIPTS END-->
   </div>
 </body>

@@ -1,0 +1,53 @@
+<div ng-controller="browseTutorialsPageController" class="browse-tutorials-list">
+  <div class="container" ng-hide="loading" ng-cloak>
+    <div ng-show="loading" >
+      <span class="overlord-loading-spinner fa fa-spinner"></span>
+      <span>Loading user data...</span>
+    </div>
+    <div>
+      <h1 class="tutorial-list-header text-primary">All Tutorials:</h1>
+    </div>
+    <div class="row">
+      <div class="well">
+        <ul class="list-group">
+          <li class="tutorial list-group-item" ng-repeat="tutorial in tutorials">
+            <a href="/tutorials/{{tutorial.id}}" class="list-group-item tutorials-list">
+              <h3 class="tutorial-title list-group-item-heading">
+                {{ tutorial.title }}
+              </h3>
+              <p class="tutorial-description list-group-item-text">
+                {{ tutorial.description }}
+              </p>
+              <ul class="tutorial-info list-inline list-unstyled">
+                <li>
+                  <span><i class="icon fa fa-user"></i> By {{ tutorial.owner }}</span>
+                </li>
+                <li class="divider">|</li>
+                <li>
+                  <span>Created </i>  {{ tutorial.created }}</span>
+                </li>
+                <li class="divider">|</li>
+                <li>
+                  <span><i class="icon fa fa-video-camera"></i>  {{ tutorial.totalTime }}</span>
+                </li>
+                <li class="divider">|</li>
+                <li>
+                  <span>
+                    <span class="rating-label">Average Rating:</span>
+                      <span class="rating-stars">
+                        <rating ng-model="tutorial.averageRating" max="max" readonly="isReadonly" on-hover="hoveringOver(value, tutorial.id)" on-leave="overStar = null"></rating>
+                      </span>
+                    </span>
+                </li>
+              </ul>
+            </a>
+          </li>
+        </ul>
+        <button class="btn btn-primary center-block" ng-click="fetchMoreTutorialsLikeThis()" ng-disabled="loading || noMoreTutorials" >
+          <span ng-show="!loading">show more tutorials</span>
+            <span ng-show="loading"><i class="overlord-loading-spinner fa fa-spinner" ></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
