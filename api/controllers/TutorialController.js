@@ -212,12 +212,86 @@ module.exports = {
   createTutorial: function(req, res) {
 
     // Create a tutorial record using `username`, `title`, and `description`
+    if(!_.isString(req.param('title'))){
+      return res.badRequest();
+    }
+
+    if(!_.isString(req.param('description'))){
+      return res.badRequest();
+    }
+
+    User.findOne({
+      id: req.session.userId
+    }).exec(function(err, foundUser){
+      if (err) return res.negotiate;
+      if (!foundUser) return res.notFound();
+
+      Tutorial.create({
+        title: req.param('title'),
+        description: req.param('description'),
+        owner: { username: foundUser.username },
+      }).exec(function(err, createdTutorial){
+        if (err) return res.negotiate(err);
+        foundUser.tutorials = [];
+        foundUser.tutorials.push({
+          title: req.param('title'),
+          description: req.param('description'),
+          created: foundUser.createdAt,
+          updated: foundUser.updatedAt,
+          id: foundUser.id
+        });
+      });
+
+      User.update({
+        id: req.session.userId
+      }, {
+        tutorials. foundUser.tutorials
+      }).exec(function(err){
+        if(err) return res.negotiate(err);
+        return res.json({id: createdTutorial.id});
+
+      });
+    });
 
     // Pass back the `id` of the new record, simulate `1` for now.
     return res.json({id: 1});
   },
 
   updateTutorial: function(req, res) {
+    if(!_.isString(req.param('title'))){
+      return res.badRequest();
+    }
+
+    if(!_.isString(req.param('description'))){
+      return res.badRequest();
+    }
+
+    User.findOne({
+      id: req.session.userId
+    }).exec(function(err, foundUser){
+      if(err) return res.negotiate(err);
+      if(!foundUser) return res.notFound();
+
+      Tutorial.findOne({
+        id: +req.param('id')
+      }).exec(function(err, foundTutorial){
+        if(err) return res.negotiate(err);
+        if(!foundTutorial) return res.notFound();
+
+        if(foundUser.username != foundTutorial.owner.username){
+          return res.forbidden();
+        }
+
+        Tutorial.update({
+          id: +req.param('id')
+        }, {
+          title: req.param('title'),
+          description: req.param('description')
+        }).exec(function(err)){
+          if(err) return res.negotiate(err);
+        });
+      });
+    });
 
     return res.ok();
   },

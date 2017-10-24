@@ -210,7 +210,7 @@ sails.log.info(req.session.userId);
 
 **WARNING!**
 
-Database connection option should NOT be duplicated or declared in 2 different files like the following scenario or else Sails will crash with message: **error: A hook (orm) failed to load!**.
+Database connection option should **NOT** be duplicated or declared in 2 different files like the following scenario or else Sails will crash with message: error: A hook (orm) failed to load!.
 
 ```javascript
 // file : config/models.js
@@ -248,3 +248,14 @@ Method **unique()** of machinepack-strings seemed to be deprecated, use [**rando
 var randomString = Strings.unique({}).execSync(); // deprecated
 var randomString = Strings.random({}).execSync(); // use this for now
 ```
+
+## Chapter 12 — Embedded data and associations
+
+Relationship characteristics:
+* **Direction (one-way or two-way reference)** : a relationship has a two-way reference if both models require the ability to find, create, update, or destroy records in each model.
+* **Quantity (one or many)** : does the related model have a relationship with one record or multiple records? Between the user and tutorial models, the user can own multiple tutorials, but a tutorial can be owned by only one user.
+
+Three ways to create relationships in models:
+* **Embedding values** : embed values from one model’s record into another model’s record and then maintain each embedded value for each record.
+* **One-way association reference** :  Use Waterline associations to create a one-way reference association between two models and then maintain each reference.
+* **Two-way association reference** : Use Waterline associations to create a two-way referenced association between two models and maintain a single reference for both associations.

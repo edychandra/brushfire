@@ -890,12 +890,12 @@ module.exports = {
 
   editTutorial: function(req, res) {
 
-    // Fake tutorials detail dictionary 
-    var tutorial = {
-      title: 'The best of Douglas Crockford on JavaScript.',
-      description: 'Understanding JavaScript the good parts, and more.',
-      id: 1
-    };
+    Tutorial.findOne({
+      id: +req.param('id')
+    }).exec(function(err, foundTutorial){
+      if(err) return res.negotiate(err);
+      if(!foundTutorial) return res.notFound();
+    })
 
     User.findOne({
       id: +req.session.userId
@@ -907,6 +907,10 @@ module.exports = {
       if (!foundUser) {
         sails.log.verbose('Session refers to a user who no longer exists- did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
         return res.redirect('/tutorials');
+      }
+
+      if(foundUser.username !== foundTutorial.owner.username){
+        return res.redirect('/tutorials/'+foundTutorial.id);
       }
 
       return res.view('tutorials-detail-edit', {
