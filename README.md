@@ -208,9 +208,7 @@ sails.log.info(req.session.userId);
 
 
 
-**WARNING!**
-
-Database connection option should **NOT** be duplicated or declared in 2 different files like the following scenario or else Sails will crash with message: error: A hook (orm) failed to load!.
+**WARNING!** — database connection option should **NOT** be duplicated or declared in 2 different files like the following scenario or else Sails will crash with message: error: A hook (orm) failed to load!.
 
 ```javascript
 // file : config/models.js
