@@ -134,6 +134,7 @@ npm install machinepack-passwords --save
 ```
 
 **Using try/catch block**:
+
 The usage of **.execSync()** has two distinct differences in the synchronous usage of a machine:
 1. There’s no callback that passes an error and any result of the machine — you need to provide a variable that will be assigned the value of a successfully returned result.
 2. You're wrapping the machine in a try/catch. This will handle any errors without crashing the application. 
@@ -249,16 +250,18 @@ var randomString = Strings.random({}).execSync(); // use this for now
 
 ## Chapter 12 — Embedded data and associations
 
-Relationship characteristics:
-* **Direction (one-way or two-way reference)** : a relationship has a two-way reference if both models require the ability to find, create, update, or destroy records in each model.
-* **Quantity (one or many)** : does the related model have a relationship with one record or multiple records? Between the user and tutorial models, the user can own multiple tutorials, but a tutorial can be owned by only one user.
+**Relationship characteristics:**
+1. **Direction (one-way or two-way reference)** : a relationship has a two-way reference if both models require the ability to find, create, update, or destroy records in each model.
+2. **Quantity (one or many)** : does the related model have a relationship with one record or multiple records? Between the user and tutorial models, the user can own multiple tutorials, but a tutorial can be owned by only one user.
 
-Three ways to create relationships in models:
-* **Embedding values** : embed values from one model’s record into another model’s record and then maintain each embedded value for each record.
-* **One-way association reference** :  use Waterline associations to create a one-way reference association between two models and then maintain each reference.
-* **Two-way association reference** : use Waterline associations to create a two-way referenced association between two models and maintain a single reference for both associations.
+**Three ways to create relationships in models:**
+1. **Embedding values** : embed values from one model’s record into another model’s record and then maintain each embedded value for each record.
+2. **One-way association reference** :  use Waterline associations to create a one-way reference association between two models and then maintain each reference.
+3. **Two-way association reference** : use Waterline associations to create a two-way referenced association between two models and maintain a single reference for both associations.
 
-Configuring an association between two models:
+**Configuring an association between two models:**
 * The model to associate to.
 * Whether to associate one record, also called a model association, or many records, also called a collection association.
 * In the case of a collection, whether it’s a one-way or a two-way association.
+
+**Service** : one or more functions declared within a dictionary that Sails globalizes, making the functions available everywhere. Located at **api/services** folder.
