@@ -214,7 +214,6 @@ module.exports = {
       // Generate random alphanumeric string for the passwordRecoveryToken
       try {
 
-        // var randomString = Strings.unique({}).execSync();
         var randomString = Strings.random({}).execSync();
 
       } catch (err) {

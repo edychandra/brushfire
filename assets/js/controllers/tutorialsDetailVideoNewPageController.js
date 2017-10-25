@@ -27,7 +27,7 @@ angular.module('brushfire').controller('tutorialsDetailVideoNewPageController', 
 
   // Get the tutorials number of stars
   $scope.tutorial = {
-    stars: window.SAILS_LOCALS.tutorial.stars
+    stars: window.SAILS_LOCALS.stars
   };
 
   // We need a max for the stars (i.e. 1 out of 5 stars)
@@ -75,7 +75,6 @@ angular.module('brushfire').controller('tutorialsDetailVideoNewPageController', 
     } else {
 
       $scope.tutorialsDetailVideoNew.invalidUrl = true;
-
     }
 
   };

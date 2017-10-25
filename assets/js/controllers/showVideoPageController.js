@@ -32,6 +32,7 @@ angular.module('brushfire').controller('showVideoPageController', ['$scope', '$h
     // If something went wrong, handle the error.
     if (JWR.statusCode !== 200) {
       console.error(JWR);
+      // TODO
       return;
     }
 

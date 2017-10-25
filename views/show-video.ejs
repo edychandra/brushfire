@@ -21,18 +21,18 @@ typeof chats !== 'undefined' ? JSON.stringify(chats) : 'null'
     </div>
     <div class="row">
       <div class="video-column col-md-8">
-        <div class="panel panel-default">  
+        <div class="panel panel-default">
           <div class="video embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" width="640" height="390" ng-src="<%= video.src %>" frameborder="0" allowfullscreen>
+            <iframe class="embed-responsive-item" ng-src="<%= video.src %>" allowfullscreen>
             </iframe>
-          </div>  
+          </div>
         </div>
       </div>
       <div class="chat-column col-md-4">
         <form role="form" ng-submit="sendMessage()">
           <div class="panel panel-default">
-            <div class="panel-heading lead">
-              <i class="fa fa-comment"></i> Chat
+            <div class="panel-heading">
+              <i class="fa fa-comment"> Chat</i>
             </div>
             <div class="panel-body">
               <ul class="chat-window">
@@ -57,9 +57,9 @@ typeof chats !== 'undefined' ? JSON.stringify(chats) : 'null'
                   <button type="submit" ng-disabled="!hasJoinedRoom || !me" class="btn btn-info btn-sm" id="btn-chat">
                   Send</button>
                 </span>
+              </div>
               <div ng-show="typing">
                 {{usernameTyping}} is typing...<i class="overlord-loading-spinner fa fa-spinner" ></i>
-              </div>
               </div>
             </div>
           </div><!-- class="panel panel-primary" -->

@@ -3,7 +3,7 @@ Tutorial.find({id: 12}).exec(function(err, foundRecords){
 	console.log('The records: ', foundRecords);
 });
 
-
+------------------------------------------------------------
 
 Tutorial.update({
   id: 12
@@ -15,6 +15,7 @@ Tutorial.update({
 	console.log('The records: ', foundRecords);
 });
 
+------------------------------------------------------------
 
 User.findOne({
   id: 34
@@ -45,11 +46,21 @@ User.findOne({
   });
 });
 
-
+------------------------------------------------------------
 
 User.findOne({
   id: 34
 }).exec(function(err, foundUser){
   if (err) console.log(err);
   console.log(foundUser);
+});
+
+------------------------------------------------------------
+
+Tutorial.findOne({
+  id: 1
+})
+.exec(function(err, foundTutorial){
+  if(err) console.log(err);
+  console.log(foundTutorial);
 });

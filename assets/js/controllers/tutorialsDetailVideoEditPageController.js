@@ -42,6 +42,7 @@ angular.module('brushfire').controller('tutorialsDetailVideoEditPageController',
     $scope.src = "/images/preview.jpg";
     $scope.tutorialsDetailVideoEdit.iframeHide = true;
   }
+
 /* 
   _____   ____  __  __   ______               _       
  |  __ \ / __ \|  \/  | |  ____|             | |      

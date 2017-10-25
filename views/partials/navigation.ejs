@@ -36,7 +36,7 @@
       else if (me) { %>
         <ul class="nav navbar-nav navbar-right">
           <% if (typeof showAddTutorialButton !== 'undefined' && showAddTutorialButton) { %>
-            <!-- <li><p class="navbar-btn"><a type="button" class="add-tutorial-btn btn" href="/tutorials/new">add tutorial</a></p></li> -->
+            <li><p class="navbar-btn"><a type="button" class="add-tutorial-btn btn" href="/tutorials/new">add tutorial</a></p></li>
           <% } %>
           <li class="me">
             <span class="user-dropdown" ng-click="menuVisible = true">
@@ -49,7 +49,7 @@
               <div class="user-menu-veil" ng-click="menuVisible = false"></div>
               <div class="user-menu">
                 <div class="list-group user-menu-items">
-                  <a class="user-menu-item list-group-item" href="/tutorials/new">Add Tutorial</a>
+                  <!-- <a class="user-menu-item list-group-item" href="/tutorials/new">Add Tutorial</a> -->
                   <a class="user-menu-item list-group-item" href="/<%= me.username %>">Your Profile</a>
                   <a class="user-menu-item list-group-item" ng-click="signout()">Sign Out</a>
                 </div>

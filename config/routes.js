@@ -34,8 +34,8 @@ module.exports.routes = {
   'PUT /tutorials/:id': 'TutorialController.updateTutorial',
   'PUT /tutorials/:id/rate': 'TutorialController.rateTutorial',
 
+  'GET /videos/:id/join': 'VideoController.joinChat',
   'POST /videos/:id/chat': 'VideoController.chat',
-  'PUT /videos/:id/join': 'VideoController.joinChat',
 
   'DELETE /tutorials/:id': 'TutorialController.deleteTutorial',
   'DELETE /videos/:id': 'TutorialController.removeVideo',
@@ -49,7 +49,6 @@ module.exports.routes = {
   *************************************************************/
   
   'GET /profile/followers': 'PageController.profileFollower',
-
 
   'GET /': 'PageController.home',
   'GET /profile/edit': 'PageController.editProfile',
@@ -73,10 +72,10 @@ module.exports.routes = {
 
   'GET /:username/followers': 'PageController.profileFollower',
   'GET /:username/following': 'PageController.profileFollowing',
-
   'GET /:username': {
     controller: 'PageController',
     action: 'profile',
     skipAssets: true
   }
+  // 'GET /:username': 'PageController.profile',
 };

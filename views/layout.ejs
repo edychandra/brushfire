@@ -20,7 +20,7 @@
     <!--STYLES END-->
 
     <!-- Expose sails locals on the window object -->
-    <script type="text/javascript"> //#A
+    <script type="text/javascript">
     window.SAILS_LOCALS = {
       _csrf: <%- typeof _csrf !== 'undefined' ? JSON.stringify(_csrf) : 'null' %>,
 
