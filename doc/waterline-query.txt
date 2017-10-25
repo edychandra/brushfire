@@ -1,0 +1,55 @@
+Tutorial.find({id: 12}).exec(function(err, foundRecords){
+	if(err) console.log(err);
+	console.log('The records: ', foundRecords);
+});
+
+
+
+Tutorial.update({
+  id: 12
+}, {
+  title: 'The best of javascript',
+  description: 'The best of js'
+}).exec(function(err, foundRecords){
+	if(err) console.log(err);
+	console.log('The records: ', foundRecords);
+});
+
+
+User.findOne({
+  id: 34
+}).exec(function(err, foundUser){
+  if (err) console.log(err);
+  if (!foundUser) console.log('not found');
+
+  Tutorial.create({
+    title: 'hello',
+    description: 'world',
+    owner:foundUser.id
+  }).exec(function(err, createdTutorial){
+    if (err) console.log(err);
+    foundUser.tutorials.add(createTutorial.id);
+    foundUser.save(function (err){
+      if (err) console.log(err);
+      console.log({id: createTutorial.id});
+    });
+  });
+
+  User.update({
+    id: 34
+  }, {
+    tutorials: foundUser.tutorials
+  }).exec(function(err){
+    if(err) console.log(err);
+    console.log({id: createdTutorial.id});
+  });
+});
+
+
+
+User.findOne({
+  id: 34
+}).exec(function(err, foundUser){
+  if (err) console.log(err);
+  console.log(foundUser);
+});
