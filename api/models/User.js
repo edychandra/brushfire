@@ -44,13 +44,14 @@ module.exports = {
       type: 'string'
     },
 
-    tutorials: {
-      type: 'json'
-    },
-
     // tutorials: {
-    //   collection: 'tutorial',
+    //   type: 'json'
     // },
+
+    tutorials: {
+      collection: 'tutorial',
+      via: 'owner'
+    },
      
 
     ratings: {

@@ -229,23 +229,20 @@ module.exports = {
       Tutorial.create({
         title: req.param('title'),
         description: req.param('description'),
-        owner: { username: foundUser.username },
+        owner:foundUser.id
       }).exec(function(err, createdTutorial){
         if (err) return res.negotiate(err);
-        foundUser.tutorials = [];
-        foundUser.tutorials.push({
-          title: req.param('title'),
-          description: req.param('description'),
-          created: foundUser.createdAt,
-          updated: foundUser.updatedAt,
-          id: foundUser.id
+        foundUser.tutorials.add(createTutorial.id);
+        foundUser.save(function (err){
+          if (err) return res.negotiate(err);
+          return res.json({id: createTutorial.id});
         });
       });
 
       User.update({
         id: req.session.userId
       }, {
-        tutorials. foundUser.tutorials
+        tutorials: foundUser.tutorials
       }).exec(function(err){
         if(err) return res.negotiate(err);
         return res.json({id: createdTutorial.id});
@@ -266,34 +263,15 @@ module.exports = {
       return res.badRequest();
     }
 
-    User.findOne({
-      id: req.session.userId
-    }).exec(function(err, foundUser){
+    Tutorial.update({
+      id: +req.param('id')
+    }, {
+      title: req.param('title'),
+      description: req.param('description')
+    }).exec(function(err){
       if(err) return res.negotiate(err);
-      if(!foundUser) return res.notFound();
-
-      Tutorial.findOne({
-        id: +req.param('id')
-      }).exec(function(err, foundTutorial){
-        if(err) return res.negotiate(err);
-        if(!foundTutorial) return res.notFound();
-
-        if(foundUser.username != foundTutorial.owner.username){
-          return res.forbidden();
-        }
-
-        Tutorial.update({
-          id: +req.param('id')
-        }, {
-          title: req.param('title'),
-          description: req.param('description')
-        }).exec(function(err)){
-          if(err) return res.negotiate(err);
-        });
-      });
+      return res.ok();
     });
-
-    return res.ok();
   },
   
   addVideo: function(req, res) {

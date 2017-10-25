@@ -255,5 +255,10 @@ Relationship characteristics:
 
 Three ways to create relationships in models:
 * **Embedding values** : embed values from one model’s record into another model’s record and then maintain each embedded value for each record.
-* **One-way association reference** :  Use Waterline associations to create a one-way reference association between two models and then maintain each reference.
-* **Two-way association reference** : Use Waterline associations to create a two-way referenced association between two models and maintain a single reference for both associations.
+* **One-way association reference** :  use Waterline associations to create a one-way reference association between two models and then maintain each reference.
+* **Two-way association reference** : use Waterline associations to create a two-way referenced association between two models and maintain a single reference for both associations.
+
+Configuring an association between two models:
+* The model to associate to.
+* Whether to associate one record, also called a model association, or many records, also called a collection association.
+* In the case of a collection, whether it’s a one-way or a two-way association.
