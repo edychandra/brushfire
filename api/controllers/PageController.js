@@ -751,71 +751,139 @@ module.exports = {
 
   tutorialDetail: function(req, res) {
 
+    // Find the tutorial that will be displayed
     Tutorial.findOne({
       id: req.param('id')
     })
     .populate('owner')
     .populate('videos')
+    .populate('ratings') 
     .exec(function(err, foundTutorial){
       if (err) return res.negotiate(err);
       if (!foundTutorial) return res.notFound();
 
-      foundTutorial.owner = foundTutorial.owner.username;
-
-      foundTutorial.created = DatetimeService.getTimeAgo({date: foundTutorial.createdAt});
-
-      foundTutorial.updated = DatetimeService.getTimeAgo({date: foundTutorial.updatedAt});
-
-      // If not logged in set `me` property to `null` and pass the tutorial to the view
-      if (!req.session.userId) {
-        return res.view('tutorials-detail', {
-          me: null,
-          stars: foundTutorial.stars,
-          tutorial: foundTutorial
-        });
-      }
-
-      User.findOne(req.session.userId)
-      .exec(function(err, user) {
+      // Find all ratings made by the currently authenticated user agent
+      Rating.find({
+        byUser: req.session.userId
+      }).exec(function(err, foundRating){
         if (err) return res.negotiate(err);
 
-        if (!user) {
-          sails.log.verbose('Session refers to a user who no longer exists- did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
-          return res.view('tutorials-detail', {
-            me: null
-          });
-        }
-
-        // We'll provide `me` as a local to the profile page view.
-        // (this is so we can render the logged-in navbar state, etc.)
-        var me = {
-          gravatarURL: user.gravatarURL,
-          username: user.username,
-          admin: user.admin
-        };
-
-        if (user.username === foundTutorial.owner) {
-          me.isMe = true;
-
-          return res.view('tutorials-detail', {
-            me: me,
-            showAddTutorialButton: true,
-            stars: foundTutorial.stars,
-            tutorial: foundTutorial
-          });
-
+        // If the user agent hasn't made any ratings, assign myRating to null
+        if (foundRating.length === 0) {
+          foundTutorial.myRating = null;
         } else {
+
+          // Iterate through ratings to determine whether the rating matches
+          // the id of the tutorial to be displayed.
+          _.each(foundRating, function(rating){
+
+            if (foundTutorial.id === rating.byTutorial) {
+              foundTutorial.myRating = rating.stars;
+              return;
+            }
+          });
+        }
+
+        // If the tutorial has no ratings assign averageRating to null.
+        if (foundTutorial.ratings.length === 0) {
+          foundTutorial.averageRating = null;
+        } else {
+
+          // Calculate the average rating
+          // Assign the average to foundTutorial.averageRating
+          foundTutorial.averageRating = MathService.calculateAverage({ratings: foundTutorial.ratings});
+        }
+
+          var totalSeconds = 0;
+          _.each(foundTutorial.videos, function(video){
+
+            totalSeconds = totalSeconds + video.lengthInSeconds;
+
+            video.totalTime = DatetimeService.getHoursMinutesSeconds({totalSeconds: video.lengthInSeconds}).hoursMinutesSeconds;
+
+            foundTutorial.totalTime = DatetimeService.getHoursMinutesSeconds({totalSeconds: totalSeconds}).hoursMinutesSeconds;
+          });
+    
+        // limit the owner attribute to the users name
+        foundTutorial.owner = foundTutorial.owner.username;
+
+        // Transform createdAt in time ago format
+        foundTutorial.created = DatetimeService.getTimeAgo({date: foundTutorial.createdAt});
+
+        // Transform updatedAt in time ago format
+        foundTutorial.updated = DatetimeService.getTimeAgo({date: foundTutorial.updatedAt});
+
+        /**************
+          Video Order
+        ***************/
+
+        // Use the embedded `videoOrder` array to apply the manual sort order
+        // to our videos.
+        foundTutorial.videos = _.sortBy(foundTutorial.videos, function getRank (video) {
+          // We use the index of this video id within the `videoOrder` array as our sort rank.
+          // Because that array is in the proper order, if we use the index of this video id as
+          // the rank, then the newly sorted `tutorial.videos` array will be in the same order.
+          return _.indexOf(foundTutorial.videoOrder,video.id);
+        });
+
+        // Given (e.g.):
+        // tutorial.videoOrder= [3, 4, 5]
+        // tutorial.videos = [{id: 5}, {id: 4}, {id: 3}]
+        // 
+        // Yields (e.g.):
+        // tutorial.videos <== [{id: 3}, {id: 4}, {id: 5}]
+
+        // If not logged in set `me` property to `null` and pass the tutorial to the view
+        if (!req.session.userId) {
           return res.view('tutorials-detail', {
-            me: {
-              gravatarURL: user.gravatarURL,
-              username: user.username,
-              admin: user.admin
-            },
-            showAddTutorialButton: true,
+            me: null,
             stars: foundTutorial.stars,
             tutorial: foundTutorial
           });
         }
+
+        User.findOne(req.session.userId)
+        .exec(function(err, user) {
+          if (err) return res.negotiate(err);
+
+          if (!user) {
+            sails.log.verbose('Session refers to a user who no longer exists- did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
+            return res.view('tutorials-detail', {
+              me: null
+            });
+          }
+
+          // We'll provide `me` as a local to the profile page view.
+          // (this is so we can render the logged-in navbar state, etc.)
+          var me = {
+            gravatarURL: user.gravatarURL,
+            username: user.username,
+            admin: user.admin
+          };
+
+          if (user.username === foundTutorial.owner) {
+            me.isMe = true;
+
+            return res.view('tutorials-detail', {
+              me: me,
+              showAddTutorialButton: true,
+              stars: foundTutorial.stars,
+              tutorial: foundTutorial
+            });
+
+          } else {
+            return res.view('tutorials-detail', {
+              me: {
+                gravatarURL: user.gravatarURL,
+                username: user.username,
+                admin: user.admin
+              },
+              showAddTutorialButton: true,
+              stars: foundTutorial.stars,
+              tutorial: foundTutorial
+            });
+          }
+        });
       });
     });
   },
